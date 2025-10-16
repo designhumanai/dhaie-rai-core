@@ -14,6 +14,8 @@ Copyright © Viktor Savitskiy, 1995–2025
 
 > **"We bridge the semantic gap between system behavior and human understanding."**
 
+**🌐 Language:** **English** | [Русский](README.md)
+
 ---
 
 ## 🎯 The Critical Infrastructure Gap
