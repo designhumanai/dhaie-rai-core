@@ -12,10 +12,9 @@ Copyright © Viktor Savitskiy, 1995–2025
 [![Research Grade](https://img.shields.io/badge/Research-Grade_Prototype-8A2BE2.svg?style=for-the-badge)](#research-context)
 [![DHAIE ECS: 92%](https://img.shields.io/badge/DHAIE_ECS-92%25-green.svg?style=for-the-badge)](https://designhumanai.com/ethics)
 
-> **"We bridge the semantic gap between system behavior and human understanding."**
-
 **🌐 Language:** **English** | [Русский](README.md)
 
+> **"We bridge the semantic gap between system behavior and human understanding."**
 ---
 
 ## 🎯 The Critical Infrastructure Gap
