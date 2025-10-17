@@ -1,0 +1,443 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://designhumanai.com/schemas/service-manifest/v1.0/schema.json",
+  "$comment": "SPDX-License-Identifier: Apache-2.0",
+  "title": "DHAIE RAI Service Manifest Schema",
+  "description": "Semantic self-description schema for Reflexive AI systems enabling services to declare their business purpose, ethical constraints, and semantic dependencies. Copyright © Viktor Savitskiy, 1995-2025. Licensed under Apache License 2.0. Part of the DHAIE Project (Design Human AI Engineering & Enhancement). Repository: https://github.com/designhumanai/dhaie-rai-core",
+  "type": "object",
+  "required": [
+    "@context",
+    "@type",
+    "@id",
+    "name",
+    "version",
+    "dhaie:manifestVersion",
+    "description",
+    "dhaie:businessPurpose",
+    "dhaie:domainContext",
+    "provider",
+    "dhaie:ethicalConstraints"
+  ],
+  "properties": {
+    "@context": {
+      "type": "object",
+      "description": "JSON-LD context defining vocabularies",
+      "required": ["@vocab", "dhaie"],
+      "properties": {
+        "@vocab": {
+          "type": "string",
+          "const": "https://schema.org/",
+          "description": "Default vocabulary (schema.org)"
+        },
+        "dhaie": {
+          "type": "string",
+          "const": "https://designhumanai.com/ontology/v1#",
+          "description": "DHAIE-specific namespace"
+        }
+      },
+      "additionalProperties": false
+    },
+    "@type": {
+      "type": "string",
+      "const": "dhaie:ReflexiveServiceManifest",
+      "description": "RDF type declaration"
+    },
+    "@id": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://",
+      "description": "Globally unique, persistent URI for this manifest"
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9][ a-zA-Z0-9-]{0,98}[a-zA-Z0-9]$",
+      "minLength": 3,
+      "maxLength": 100,
+      "description": "Human-readable service name"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+      "description": "Semantic version of the service implementation"
+    },
+    "dhaie:manifestVersion": {
+      "type": "string",
+      "const": "1.0",
+      "description": "Version of DHAIE manifest schema"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 500,
+      "description": "Technical summary of what the service does"
+    },
+    "dhaie:businessPurpose": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 700,
+      "description": "Why this service exists - the business value it provides"
+    },
+    "dhaie:domainContext": {
+      "type": "string",
+      "pattern": "^[a-zA-Z][a-zA-Z0-9]*(?:\\.[a-zA-Z][a-zA-Z0-9]*){2,}$",
+      "description": "Dot-separated path in business architecture (min 3 levels)"
+    },
+    "provider": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 200,
+          "description": "Name of the providing organization"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Provider's homepage or info page"
+        }
+      },
+      "additionalProperties": false
+    },
+    "dhaie:operations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "description"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[a-z][a-zA-Z0-9]{2,49}$",
+            "description": "Unique operation identifier (camelCase)"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 300,
+            "description": "Human-readable operation explanation"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "financial",
+              "dataQuery",
+              "dataMutation",
+              "admin",
+              "compute",
+              "orchestration",
+              "notification",
+              "authentication"
+            ],
+            "description": "High-level operation grouping"
+          },
+          "mutates": {
+            "type": "boolean",
+            "description": "Whether operation changes system state"
+          },
+          "piiFields": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$"
+            },
+            "uniqueItems": true,
+            "description": "PII field names involved in operation"
+          },
+          "auditRequired": {
+            "type": "boolean",
+            "description": "Whether operation requires audit logging"
+          }
+        },
+        "additionalProperties": false
+      },
+      "uniqueItems": true,
+      "description": "Primary operations exposed by the service"
+    },
+    "dhaie:ethicalConstraints": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["regulation", "implementation"],
+        "properties": {
+          "regulation": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 50,
+            "description": "Common name of regulation or standard"
+          },
+          "uri": {
+            "type": "string",
+            "format": "uri",
+            "description": "Link to official regulatory text"
+          },
+          "articles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Z][a-zA-Z]+ \\d+.*$"
+            },
+            "uniqueItems": true,
+            "description": "Specific articles/sections referenced"
+          },
+          "implementation": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 500,
+            "description": "How the service implements this constraint"
+          },
+          "verificationMethod": {
+            "type": "object",
+            "required": ["type"],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "automated_scan",
+                  "manual_audit",
+                  "third_party_certification",
+                  "continuous_monitoring"
+                ]
+              },
+              "tool": {
+                "type": "string",
+                "maxLength": 100
+              },
+              "policyUri": {
+                "type": "string",
+                "format": "uri"
+              },
+              "lastVerified": {
+                "type": "string",
+                "format": "date"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      "description": "Ethical, legal, and regulatory constraints"
+    },
+    "dhaie:consentMechanism": {
+      "type": "string",
+      "enum": [
+        "explicit_consent_required",
+        "implied_consent",
+        "no_pii_processed",
+        "consent_managed_externally"
+      ],
+      "description": "How user consent is obtained for data processing"
+    },
+    "dhaie:socialImpact": {
+      "type": "object",
+      "required": ["description"],
+      "properties": {
+        "metrics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "value"],
+            "properties": {
+              "name": {
+                "type": "string",
+                "enum": [
+                  "financial_inclusion_index",
+                  "cross_border_cost_reduction",
+                  "carbon_footprint_reduction",
+                  "accessibility_improvement",
+                  "cognitive_equity_score",
+                  "digital_divide_reduction",
+                  "healthcare_access_improvement",
+                  "education_accessibility"
+                ],
+                "description": "Standardized social impact metric name"
+              },
+              "value": {
+                "type": "number",
+                "description": "Metric value (interpretation depends on metric)"
+              },
+              "baseline": {
+                "type": "number",
+                "description": "Baseline value for comparison"
+              },
+              "unit": {
+                "type": "string",
+                "maxLength": 50,
+                "description": "Unit of measurement"
+              },
+              "measurementMethod": {
+                "type": "string",
+                "maxLength": 200,
+                "description": "How this metric is measured"
+              }
+            },
+            "additionalProperties": false
+          },
+          "uniqueItems": true
+        },
+        "description": {
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 700,
+          "description": "Narrative description of social impact"
+        }
+      },
+      "additionalProperties": false,
+      "description": "Social impact metrics and description"
+    },
+    "dhaie:semanticDependencies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["target", "relationship", "businessReason"],
+        "properties": {
+          "target": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 100,
+            "description": "Name of the dependent-upon service"
+          },
+          "targetUri": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https://",
+            "description": "URI of target service's manifest"
+          },
+          "relationship": {
+            "type": "string",
+            "enum": [
+              "data.provider.primary",
+              "data.provider.cache",
+              "data.provider.realtime",
+              "data.consumer.analytics",
+              "data.consumer.backup",
+              "data.consumer.export",
+              "risk.assessment.required",
+              "risk.assessment.optional",
+              "compliance.verification.mandatory",
+              "compliance.verification.optional",
+              "orchestration.trigger",
+              "orchestration.coordinate",
+              "computation.specialized",
+              "computation.offload",
+              "notification.trigger",
+              "notification.subscribe",
+              "auth.delegation",
+              "auth.verification",
+              "ledger.append_only",
+              "ledger.query"
+            ],
+            "description": "Nature of dependency from DHAIE taxonomy"
+          },
+          "businessReason": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 500,
+            "description": "Why this dependency exists"
+          },
+          "consentImplications": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 300,
+            "description": "What data is shared and consent implications"
+          },
+          "condition": {
+            "type": "object",
+            "required": ["when", "enforcementLevel"],
+            "properties": {
+              "when": {
+                "type": "string",
+                "maxLength": 200,
+                "description": "Condition expression (pseudo-code)"
+              },
+              "enforcementLevel": {
+                "type": "string",
+                "enum": ["mandatory", "recommended", "optional"]
+              }
+            },
+            "additionalProperties": false,
+            "description": "Conditional dependency activation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "uniqueItems": true,
+      "description": "Semantic relationships with other services"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "dhaie:operations": {
+            "contains": {
+              "properties": {
+                "piiFields": {
+                  "minItems": 1
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "required": ["dhaie:consentMechanism"],
+        "properties": {
+          "dhaie:consentMechanism": {
+            "not": {
+              "const": "no_pii_processed"
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "dhaie:semanticDependencies": {
+            "contains": {
+              "required": ["consentImplications"]
+            }
+          }
+        }
+      },
+      "then": {
+        "required": ["dhaie:consentMechanism"]
+      }
+    }
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "schemaEvolutionPolicy": {
+      "description": "MAJOR (1.x → 2.x): Breaking changes (remove fields, change types). MINOR (1.0 → 1.1): New optional fields. PATCH (1.0.0 → 1.0.1): Documentation only. Validators MUST accept manifests with same MAJOR version."
+    },
+    "license": {
+      "code": "Apache-2.0",
+      "codeUrl": "https://www.apache.org/licenses/LICENSE-2.0",
+      "documentation": "CC-BY-NC-SA-4.0",
+      "documentationUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+    },
+    "copyright": {
+      "holder": "Viktor Savitskiy",
+      "years": "1995-2025",
+      "project": "DHAIE Project (Design Human AI Engineering & Enhancement)",
+      "notice": "This schema is part of the DHAIE RAI Core project. For complete licensing information, see LICENSE and NOTICE files in the repository."
+    },
+    "contacts": {
+      "generalInquiries": "info@designhumanai.com",
+      "researchPartnerships": "research@designhumanai.com",
+      "commercialLicensing": "dhaie@designhumanai.com",
+      "repository": "https://github.com/designhumanai/dhaie-rai-core",
+      "discussions": "https://github.com/designhumanai/dhaie-rai-core/discussions",
+      "documentation": "https://github.com/designhumanai/dhaie-rai-core/blob/main/docs/manifest-schema.md"
+    },
+    "attribution": {
+      "creator": "Viktor Savitskiy",
+      "organization": "DHAIE Project",
+      "since": 1995,
+      "acknowledgments": "See ACKNOWLEDGMENTS.md for research contributions and citations"
+    }
+  }
+}
