@@ -10,11 +10,13 @@ Copyright © Viktor Savitskiy, 1995–2025
 [![Apache-2.0](https://img.shields.io/badge/Code-Apache--2.0-blue.svg?style=for-the-badge)](LICENSE)
 [![CC BY-NC-SA 4.0](https://img.shields.io/badge/Docs-CC_BY_NC_SA_4.0-lightgrey.svg?style=for-the-badge)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [![Research Grade](https://img.shields.io/badge/Research-Grade_Prototype-8A2BE2.svg?style=for-the-badge)](#research-context)
-[![DHAIE ECS: 92%](https://img.shields.io/badge/DHAIE_ECS-92%25-green.svg?style=for-the-badge)](https://designhumanai.com/ethics)
+[![DHAIE ECS: 92%](https://img.shields.io/badge/DHAIE_ECS-92%25-green.svg?style=for-the-badge)](ETHICS.md)
+[![Dependencies](https://img.shields.io/badge/Dependencies-Apache_2.0_Compatible-success.svg?style=for-the-badge)](DEPENDENCIES.md)
 
 **🌐 Language:** **English** | [Русский](README.md)
 
-> **"We bridge the semantic gap between system behavior and human understanding."**
+> **"We bridge the semantic gap between system behavior and human understanding"**
+
 ---
 
 ## 🎯 The Critical Infrastructure Gap
@@ -83,7 +85,7 @@ POST /v1/transfer
 
 ---
 
-## 🏗️ What's Inside: Research to Production
+## 🗂️ What's Inside: Research to Production
 
 ### Phase 0: Semantic Foundation (Research Complete ✅)
 - **Semantic Manifest Protocol** — JSON-LD schema with W3C compliance
@@ -95,7 +97,7 @@ POST /v1/transfer
 
 ### Phase 1: Cognitive Integration (Active Development 🔄)
 - **Semantic Observer** — Real-time architecture intelligence aggregator
-- **Living Knowledge Graph** — Neo4j-powered semantic topology
+- **Dynamic Knowledge Graph** — Neo4j-powered semantic topology
 - **Interactive Visualization** — React + D3.js dashboard showing meaning flows
 - **Consent Verification Layer** — Automated consent tracking and validation
 
@@ -111,7 +113,7 @@ POST /v1/transfer
 
 ---
 
-## 📐 Architecture Overview
+## 🏗️ Architecture Overview
 
 ```
 ┌──────────────────────────────────────────────────────────┐
@@ -207,7 +209,7 @@ curl http://localhost:8080/graph/service/PaymentService
   "semanticDependencies": [
     {
       "target": "FraudDetector",
-      "relationship": "risk.assessment.required",
+      "relationship": "risk_assessment_required",
       "businessReason": "Regulatory compliance mandate",
       "consentImplications": "risk_data_sharing_consent"
     }
@@ -276,6 +278,8 @@ for breach in ethics_breaches:
 
 ## 🛡️ DHAIE Ethical Compliance Integration
 
+**Complete Ethical Framework:** [ETHICS.md](ETHICS.md)
+
 ### Integrated Ethical Framework
 
 DHAIE RAI implements the full **DHAIE Ethical Framework v2.0** with measurable KPIs:
@@ -283,24 +287,24 @@ DHAIE RAI implements the full **DHAIE Ethical Framework v2.0** with measurable K
 ```yaml
 ethical_metrics:
   active_partnership:
-    consent_verification_time: "<24h"  # KPI: Time to Consent Verification
-    subject_engagement_rate: ">75%"    # Enhanced from 60%
+    consent_verification_time: "<24h"   # KPI: Time to Consent Verification
+    subject_engagement_rate: ">75%"     # Improved from 60%
     
   architectural_ethics:
     ethical_path_friction: "≤2 clicks"
     architecture_compliance: ">95%"
     
   governance_ecosystem:
-    iec_consultation_frequency: "≥4/year"      # New: IEC integration
-    ethics_review_cycle: "quarterly"           # New: Regular reviews
+    iec_consultation_frequency: "≥4/year"       # New: IEC integration
+    ethics_review_cycle: "quarterly"            # New: Regular reviews
     
   proactive_evolution:
-    ethical_stress_tests: "≥2/year"           # New: Ethics-focused tests
-    impact_assessments: "continuous"          # New: Real-time monitoring
+    ethical_stress_tests: "≥2/year"             # New: Ethics stress tests
+    impact_assessments: "continuous"            # New: Real-time monitoring
     
   social_ecology:
-    cognitive_gini_index: "<0.40"             # Improved from 0.45
-    public_good_investment: "≥25%"            # Improved from 20%
+    cognitive_gini_index: "<0.40"               # Improved from 0.45
+    public_good_investment: "≥25%"              # Improved from 20%
 ```
 
 ### Consent Management Layer
@@ -317,7 +321,7 @@ class ConsentManager:
         """Track consent throughout service lifecycle"""
         return {
             "consent_obtained": self.verify_explicit_consent(),
-            "purpose_limited": self.validate_purpose_limitation(),
+            "purpose_limitation": self.validate_purpose_limitation(),
             "withdrawal_available": self.check_withdrawal_mechanism(),
             "audit_trail": self.generate_consent_audit()
         }
@@ -393,7 +397,7 @@ creative_spiral:
 ### Phase 0 Success Metrics (Completed)
 
 | Metric | Target | Actual | Statistical Significance |
-|--------|--------|--------|----------------------|
+|--------|--------|--------|---------------------------|
 | **Semantic Coverage** | 90% of business concepts | 94% | p<0.01 |
 | **Manifest Accuracy** | <5% drift over 30 days | 3.2% | p<0.05 |
 | **Cognitive Load Reduction** | 40% improvement | 47% | p<0.001 |
@@ -578,15 +582,15 @@ https://github.com/designhumanai/dhaie-rai-datasets
 
 ## 📚 Documentation
 
-- **[Research Protocol](./docs/research-protocol.md)** — Experimental design and validation methodology
-- **[Manifest Schema](./docs/manifest-schema.md)** — JSON-LD specification (W3C compliant)
-- **[Integration Guide](./docs/integration.md)** — Add semantic self-description to your services
-- **[Semantic Modeling Patterns](./docs/patterns.md)** — Domain-specific examples
-- **[API Reference](./docs/api.md)** — Semantic Observer REST API
-- **[Validation Framework](./docs/validation.md)** — Metrics and statistical analysis
-- **[Comparison Study](./docs/comparison.md)** — vs. OpenTelemetry, Backstage, Istio
-- **[Ethical Compliance Guide](./docs/ethics-compliance.md)** — DHAIE ECS integration
-- **[Consent Management](./docs/consent-management.md)** — User consent implementation
+- **[Research Protocol](./docs/research-protocol.en.md)** — Experimental design and validation methodology
+- **[Manifest Schema](./docs/manifest-schema.en.md)** — JSON-LD specification (W3C compliant)
+- **[Integration Guide](./docs/integration.en.md)** — Add semantic self-description to your services
+- **[Semantic Modeling Patterns](./docs/patterns.en.md)** — Domain-specific examples
+- **[API Reference](./docs/api.en.md)** — Semantic Observer REST API
+- **[Validation Framework](./docs/validation.en.md)** — Metrics and statistical analysis
+- **[Comparison Study](./docs/comparison.en.md)** — vs. OpenTelemetry, Backstage, Istio
+- **[Ethical Compliance Guide](./docs/ethics-compliance.en.md)** — DHAIE ECS integration
+- **[Consent Management](./docs/consent-management.en.md)** — User consent implementation
 
 ---
 
@@ -651,12 +655,11 @@ We welcome contributions that advance semantic reflexivity in software systems.
 
 ---
 
-<!-- UNIFIED LICENSE BLOCK START -->
 ## 📜 License
 
 [![Apache-2.0](https://img.shields.io/badge/Code-Apache--2.0-blue.svg?style=for-the-badge)](LICENSE)
 [![CC BY-NC-SA 4.0](https://img.shields.io/badge/Docs-CC_BY_NC_SA_4.0-lightgrey.svg?style=for-the-badge)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-[![DHAIE ECS: 92%](https://img.shields.io/badge/DHAIE_ECS-92%25-green.svg?style=for-the-badge)](https://designhumanai.com/ethics)
+[![DHAIE ECS: 92%](https://img.shields.io/badge/DHAIE_ECS-92%25-green.svg?style=for-the-badge)](ETHICS.md)
 
 ### 📄 For This File (README.md)
 - **License:** [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-nc-sa/4.0/)
@@ -731,31 +734,35 @@ We chose **Apache 2.0** to maximize adoption while protecting innovation:
 
 **Complete information:** [LICENSE.md](LICENSE.md)
 
+### 📄 Attributions and Dependencies
+- **[NOTICE](NOTICE)** — Project information and copyrights
+- **[DEPENDENCIES.md](DEPENDENCIES.md)** — Complete list of third-party components  
+- **[ETHICS.md](ETHICS.md)** — Ethical framework and compliance
+
+**Complete licensing information:** [LICENSE](LICENSE) | [NOTICE](NOTICE)
+
 ---
 
 **Copyright © Viktor Savitskiy (Савицкий Виктор Николаевич), 1995–2025**  
 **DHAIE Project — Design Human AI Engineering & Enhancement**  
 All rights reserved under applicable international law.
 
-<!-- UNIFIED LICENSE BLOCK END -->
-
 ---
 
 ## 🙏 Acknowledgments
+
+**Complete list of acknowledgments and research context:** [ACKNOWLEDGMENTS.md](ACKNOWLEDGMENTS.md)
 
 This project evolves thanks to critical feedback from:
 - **DARPA XAI Program** reviewers
 - **Stanford HAI** Human-AI Collaboration Lab
 - **MIT CSAIL** Software Architecture Group
 - **DHAIE Ethics Committee** — quarterly compliance reviews
-- Distributed systems architects from industry
-- Site Reliability Engineering community
 
-Special thanks to early research partners who validated the core hypothesis and provided real-world datasets.
+*See [ACKNOWLEDGMENTS.md](ACKNOWLEDGMENTS.md) for complete list of partners and contributors*
 
 ---
 
-<!-- UNIFIED CONTACTS BLOCK START -->
 ## 📞 Contacts
 
 **General Inquiries:**
@@ -779,8 +786,6 @@ Special thanks to early research partners who validated the core hypothesis and 
 - 💬 GitHub Discussions: [Technical and architectural discussions](https://github.com/designhumanai/dhaie-rai-core/discussions)
 - 💬 GitHub Issues: [Bug reports and feature requests](https://github.com/designhumanai/dhaie-rai-core/issues)
 - 📱 Telegram: [@DHAIE_official](https://t.me/DHAIE_official)
-
-<!-- UNIFIED CONTACTS BLOCK END -->
 
 ---
 
