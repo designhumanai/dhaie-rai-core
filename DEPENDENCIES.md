@@ -75,6 +75,49 @@ This document lists all third-party software components used in DHAIE RAI Core, 
 
 ---
 
+## Schema Validation
+
+### AJV (Another JSON Schema Validator)
+- **License:** MIT
+- **Usage:** JSON Schema Draft 2020-12 validation for service manifests
+- **Website:** https://ajv.js.org/
+- **License Details:** https://github.com/ajv-validator/ajv/blob/master/LICENSE
+- **Note:** Used in CI/CD pipelines for automated manifest validation
+
+### jsonschema (Python)
+- **License:** MIT
+- **Usage:** Python JSON Schema validation in Semantic Observer
+- **Website:** https://python-jsonschema.readthedocs.io/
+- **License Details:** https://github.com/python-jsonschema/jsonschema/blob/main/COPYING
+- **Note:** Runtime validation of manifests during ingestion
+
+---
+
+## Standards & Vocabularies
+
+### schema.org
+- **License:** Creative Commons Attribution-ShareAlike 3.0 (CC BY-SA 3.0)
+- **Usage:** Base vocabulary for common semantic properties in service manifests
+- **Website:** https://schema.org/
+- **License Details:** https://schema.org/docs/terms.html
+- **Note:** Used as `@vocab` default in JSON-LD context. No code dependency, vocabulary reference only.
+
+### W3C JSON-LD 1.1
+- **License:** W3C Software and Document License
+- **Usage:** JSON-LD format specification for semantic manifests
+- **Website:** https://www.w3.org/TR/json-ld11/
+- **License Details:** https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
+- **Note:** Open standard, no implementation restrictions. Specification only.
+
+### JSON Schema Draft 2020-12
+- **License:** BSD 3-Clause
+- **Usage:** Schema validation specification for service manifests
+- **Website:** https://json-schema.org/specification.html
+- **License Details:** https://github.com/json-schema-org/json-schema-spec/blob/main/LICENSE
+- **Note:** Open specification used for manifest structure validation
+
+---
+
 ## Testing & Quality
 
 ### JUnit 5
@@ -121,6 +164,7 @@ All direct dependencies are compatible with Apache 2.0:
 - Permissive licenses (MIT, BSD, ISC): ✅ Full compatibility
 - Apache 2.0: ✅ Same license
 - GPL v3: ✅ Only used via separate service boundary
+- CC BY-SA 3.0: ✅ Vocabulary reference only, no code dependency
 
 ---
 
@@ -182,6 +226,22 @@ python-jose: MIT
 
 ---
 
+## Node.js Dependencies (Validation Tools)
+
+```json
+{
+  "devDependencies": {
+    "ajv": "^8.12.0",
+    "ajv-formats": "^2.1.1",
+    "ajv-cli": "^5.0.0"
+  }
+}
+```
+
+**All MIT licensed**
+
+---
+
 ## License Compatibility Matrix
 
 | Component | License | Status | Compatible with Apache 2.0 | Notes |
@@ -195,6 +255,11 @@ python-jose: MIT
 | JSON-LD Java | BSD 3-Clause | ✅ Direct Use | ✅ Yes | BSD is permissive |
 | Apache Jena | Apache 2.0 | ✅ Direct Use | ✅ Yes | Same license |
 | Neo4j Server | GPL v3 | 🔄 Service Boundary | ✅ Yes | Separate service, no linking |
+| **AJV** | **MIT** | **✅ Direct Use** | **✅ Yes** | **Validation in CI/CD** |
+| **jsonschema (Python)** | **MIT** | **✅ Direct Use** | **✅ Yes** | **Runtime validation** |
+| **schema.org** | **CC BY-SA 3.0** | **📚 Vocabulary** | **✅ Yes** | **No code, vocabulary only** |
+| **JSON-LD 1.1** | **W3C License** | **📚 Standard** | **✅ Yes** | **Open specification** |
+| **JSON Schema** | **BSD 3-Clause** | **📚 Standard** | **✅ Yes** | **Open specification** |
 
 ---
 
@@ -207,9 +272,13 @@ mvn license:add-third-party
 # Python projects  
 pip-licenses --format=markdown
 
+# Node.js projects
+npx license-checker --summary
+
 # Full dependency tree
 mvn dependency:tree
 pipdeptree
+npm list --all
 
 # Security scanning
 trivy fs --security-checks vuln,config .
@@ -255,11 +324,35 @@ We use the following tools to track dependencies:
 
 - **Java:** Maven License Plugin
 - **Python:** pip-licenses
+- **Node.js:** license-checker
 - **Docker:** Trivy for container scanning
 - **GitHub:** Dependabot for security updates
 - **CI/CD:** Automated license checks in pull requests
 
 ---
 
-**Last Updated:** October 2025  
-**Maintainer:** Viktor Savitskiy (info@designhumanai.com)
+## Special Considerations
+
+### Vocabulary vs Code Dependencies
+
+Some dependencies listed here (schema.org, JSON-LD 1.1, JSON Schema) are **specifications and vocabularies**, not code libraries:
+
+- **schema.org:** We reference the vocabulary terms in our JSON-LD context. No schema.org code is included in our codebase.
+- **JSON-LD 1.1:** We follow the W3C specification. Implementation is provided by jsonld-java (BSD 3-Clause).
+- **JSON Schema:** We follow the specification. Implementation is provided by AJV (MIT) and jsonschema (MIT).
+
+These are similar to citing RFCs or W3C recommendations - they guide implementation but don't require code distribution.
+
+### Service Boundary Pattern
+
+For GPL-licensed components (Neo4j Server), we maintain compliance through the **Service Boundary Pattern**:
+- GPL component runs as a separate network service
+- Communication via Apache 2.0 licensed client driver
+- No GPL code is statically or dynamically linked into our Apache 2.0 codebase
+- This is explicitly permitted under GPL §2 and confirmed by FSF guidance
+
+---
+
+**Last Updated:** December 2025  
+**Maintainer:** Viktor Savitskiy (info@designhumanai.com)  
+**Repository:** https://github.com/designhumanai/dhaie-rai-core
