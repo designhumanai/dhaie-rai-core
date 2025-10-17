@@ -583,7 +583,7 @@ https://github.com/designhumanai/dhaie-rai-datasets
 ## 📚 Documentation
 
 - **[Research Protocol](./docs/research-protocol.en.md)** — Experimental design and validation methodology
-- **[Manifest Schema](./docs/manifest-schema.en.md)** — JSON-LD specification (W3C compliant)
+- **[Manifest Schema](./docs/manifest-schema.md)** — JSON-LD specification (W3C compliant)
 - **[Integration Guide](./docs/integration.en.md)** — Add semantic self-description to your services
 - **[Semantic Modeling Patterns](./docs/patterns.en.md)** — Domain-specific examples
 - **[API Reference](./docs/api.en.md)** — Semantic Observer REST API
