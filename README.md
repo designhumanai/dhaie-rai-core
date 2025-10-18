@@ -178,6 +178,23 @@ docker-compose -f docker-compose.research.yml up
 docker-compose -f docker-compose.ethics.yml up
 ```
 
+### Валидация вашего манифеста
+```bash
+# Для продакшен-манифестов (строгая валидация)
+ajv validate -s schema/service-manifest.schema.json \
+             -d your-service.manifest.json \
+             --strict=true
+
+# Для примеров с $comment (ослабленная валидация)
+ajv validate -s schema/service-manifest.schema.json \
+             -d examples/*.manifest.json \
+             --strict=false
+```
+
+**Версия схемы:** v1.1  
+**Версия манифеста:** `"dhaie:manifestVersion": "1.1"`  
+**История изменений:** v1.1 добавляет поддержку $comment и обучающие аннотации
+
 **Точки доступа:**
 - 🌐 **UI семантического графа:** http://localhost:3000
 - 📊 **API наблюдателя:** http://localhost:8080/graph
@@ -186,7 +203,6 @@ docker-compose -f docker-compose.ethics.yml up
 - 🎯 **Дашборд этики:** http://localhost:3001/ethics
 
 ### Пример: запрос семантического намерения с этикой
-
 ```bash
 # Получить бизнес-назначение и этическое соответствие сервиса
 curl http://localhost:8080/graph/service/PaymentService
