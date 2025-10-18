@@ -80,7 +80,7 @@
       "verificationMethod": {
         "type": "continuous_monitoring",
         "tool": "ComplyAdvantage AML Platform",
-        "lastVerified": "2025-12-01"
+        "lastVerified": "2025-10-05"
       }
     },
     {
@@ -90,7 +90,7 @@
       "verificationMethod": {
         "type": "automated_scan",
         "tool": "Dow Jones Risk & Compliance",
-        "lastVerified": "2025-11-15"
+        "lastVerified": "2025-10-10"
       }
     }
   ],
@@ -129,23 +129,11 @@
       "target": "FraudDetector",
       "targetUri": "https://api.globaltransfer.example.com/services/fraud-detector/v1/manifest",
       "relationship": "risk.assessment.required",
-      "businessReason": "AML regulation and internal risk policy require transaction risk scoring for all transfers to prevent money laundering and fraud.",
+      "businessReason": "AML regulation (FinCEN Bank Secrecy Act) mandates transaction risk scoring for all transfers exceeding $10,000 USD to prevent money laundering and fraud. Optional risk scoring applied for high-risk users regardless of amount.",
       "consentImplications": "Shares transaction amount, sender/recipient account metadata, geolocation data, and device fingerprint for risk analysis.",
       "condition": {
-        "when": "transaction.amount.usd > 10000",
-        "enforcementLevel": "mandatory",
-        "$comment": "FinCEN Bank Secrecy Act threshold for enhanced due diligence"
-      }
-    },
-    {
-      "target": "FraudDetector",
-      "targetUri": "https://api.globaltransfer.example.com/services/fraud-detector/v1/manifest",
-      "relationship": "risk.assessment.optional",
-      "businessReason": "Optional risk scoring for transactions under $10,000 to provide additional fraud protection for customers.",
-      "consentImplications": "Shares transaction amount and basic metadata for optional risk scoring.",
-      "condition": {
-        "when": "transaction.amount.usd <= 10000 AND user.risk_tier == 'high'",
-        "enforcementLevel": "recommended"
+        "when": "transaction.amount.usd > 10000 OR user.risk_tier == 'high'",
+        "enforcementLevel": "mandatory"
       }
     },
     {
