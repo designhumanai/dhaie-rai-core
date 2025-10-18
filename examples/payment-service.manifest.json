@@ -1,0 +1,180 @@
+{
+  "$comment": "SPDX-License-Identifier: Apache-2.0",
+  "$comment": "Copyright © Viktor Savitskiy, 1995-2025",
+  "$comment": "Part of DHAIE RAI Core: https://github.com/designhumanai/dhaie-rai-core",
+  "$comment": "",
+  "$comment": "DHAIE RAI Service Manifest - Cross-Border Payment Engine",
+  "$comment": "Demonstrates: Conditional dependencies, AML/GDPR compliance, social impact metrics",
+  "$comment": "Domain: FinTech.Payments.International",
+  "$comment": "",
+  "$comment": "This is a reference implementation example for educational purposes.",
+  "$comment": "Licensed under Apache License 2.0. See LICENSE file for details.",
+  
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "dhaie": "https://designhumanai.com/ontology/v1#"
+  },
+  "@type": "dhaie:ReflexiveServiceManifest",
+  "@id": "https://api.globaltransfer.example.com/services/payment-engine/v2/manifest",
+  
+  "name": "Cross-Border Payment Engine",
+  "version": "2.5.1",
+  "dhaie:manifestVersion": "1.0",
+  
+  "description": "Processes international fiat currency transactions using SWIFT and SEPA protocols with real-time fraud detection and compliance checks.",
+  
+  "dhaie:businessPurpose": "Enable fast, secure, and cost-effective cross-border monetary transfers for migrant workers and small businesses, reducing economic friction and promoting financial inclusion in underserved markets.",
+  
+  "dhaie:domainContext": "FinTech.Payments.International",
+  
+  "provider": {
+    "name": "GlobalTransfer FinTech Corp - Payments Division",
+    "url": "https://www.globaltransfer.example.com/payments"
+  },
+  
+  "dhaie:operations": [
+    {
+      "name": "initiateTransfer",
+      "description": "Initiates international money transfer with fraud detection, compliance checks, and real-time tracking.",
+      "category": "financial",
+      "mutates": true,
+      "piiFields": ["senderAccountNumber", "recipientAccountNumber", "senderFullName", "recipientFullName", "senderAddress"],
+      "auditRequired": true
+    },
+    {
+      "name": "getTransferStatus",
+      "description": "Retrieves current status and tracking information for a specific transfer.",
+      "category": "dataQuery",
+      "mutates": false,
+      "piiFields": ["transferId"],
+      "auditRequired": false
+    },
+    {
+      "name": "cancelTransfer",
+      "description": "Cancels a pending transfer before funds are disbursed, subject to business rules.",
+      "category": "financial",
+      "mutates": true,
+      "piiFields": ["transferId", "senderAccountNumber"],
+      "auditRequired": true
+    }
+  ],
+  
+  "dhaie:ethicalConstraints": [
+    {
+      "regulation": "GDPR",
+      "uri": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32016R0679",
+      "articles": ["Article 6(1)(a)", "Article 7", "Article 17"],
+      "implementation": "Explicit user consent obtained before processing any PII. Right to erasure implemented via secure data deletion API. All data transfers encrypted in transit and at rest.",
+      "verificationMethod": {
+        "type": "automated_scan",
+        "tool": "OneTrust Privacy Automation",
+        "policyUri": "https://policies.globaltransfer.example.com/gdpr-compliance.rego",
+        "lastVerified": "2025-10-01"
+      }
+    },
+    {
+      "regulation": "AML (Anti-Money Laundering)",
+      "uri": "https://www.fincen.gov/resources/statutes-regulations/bank-secrecy-act",
+      "articles": ["31 USC 5311", "31 CFR 1020.315"],
+      "implementation": "All transactions screened against OFAC sanctions lists. Transactions exceeding $10,000 USD trigger mandatory enhanced due diligence and are reported to FinCEN within 24 hours. Suspicious activity monitoring with ML-based pattern detection.",
+      "verificationMethod": {
+        "type": "continuous_monitoring",
+        "tool": "ComplyAdvantage AML Platform",
+        "lastVerified": "2025-12-01"
+      }
+    },
+    {
+      "regulation": "OFAC Sanctions Compliance",
+      "uri": "https://home.treasury.gov/policy-issues/financial-sanctions/sanctions-programs-and-country-information",
+      "implementation": "Real-time screening of all parties against OFAC SDN list. Automated block and reject for sanctioned entities with manual review escalation path.",
+      "verificationMethod": {
+        "type": "automated_scan",
+        "tool": "Dow Jones Risk & Compliance",
+        "lastVerified": "2025-11-15"
+      }
+    }
+  ],
+  
+  "dhaie:consentMechanism": "explicit_consent_required",
+  
+  "dhaie:socialImpact": {
+    "metrics": [
+      {
+        "name": "financial_inclusion_index",
+        "value": 0.73,
+        "baseline": 0.45,
+        "unit": "index (0-1 scale)",
+        "measurementMethod": "World Bank Financial Inclusion Index methodology applied to our user base"
+      },
+      {
+        "name": "cross_border_cost_reduction",
+        "value": 54.2,
+        "baseline": 100.0,
+        "unit": "percentage",
+        "measurementMethod": "Average remittance cost reduction vs traditional wire transfer providers"
+      },
+      {
+        "name": "digital_divide_reduction",
+        "value": 68.5,
+        "baseline": 35.0,
+        "unit": "percentage",
+        "measurementMethod": "Percentage of previously unbanked users now using digital financial services"
+      }
+    ],
+    "description": "Reduces average remittance costs by 54.2%, saving migrant workers approximately $2.1B annually. Increases financial inclusion index from 0.45 to 0.73 by providing accessible digital financial services to previously underserved populations across 35 developing countries."
+  },
+  
+  "dhaie:semanticDependencies": [
+    {
+      "target": "FraudDetector",
+      "targetUri": "https://api.globaltransfer.example.com/services/fraud-detector/v1/manifest",
+      "relationship": "risk.assessment.required",
+      "businessReason": "AML regulation and internal risk policy require transaction risk scoring for all transfers to prevent money laundering and fraud.",
+      "consentImplications": "Shares transaction amount, sender/recipient account metadata, geolocation data, and device fingerprint for risk analysis.",
+      "condition": {
+        "when": "transaction.amount.usd > 10000",
+        "enforcementLevel": "mandatory",
+        "$comment": "FinCEN Bank Secrecy Act threshold for enhanced due diligence"
+      }
+    },
+    {
+      "target": "FraudDetector",
+      "targetUri": "https://api.globaltransfer.example.com/services/fraud-detector/v1/manifest",
+      "relationship": "risk.assessment.optional",
+      "businessReason": "Optional risk scoring for transactions under $10,000 to provide additional fraud protection for customers.",
+      "consentImplications": "Shares transaction amount and basic metadata for optional risk scoring.",
+      "condition": {
+        "when": "transaction.amount.usd <= 10000 AND user.risk_tier == 'high'",
+        "enforcementLevel": "recommended"
+      }
+    },
+    {
+      "target": "LedgerService",
+      "targetUri": "https://api.globaltransfer.example.com/services/ledger/v2/manifest",
+      "relationship": "ledger.append_only",
+      "businessReason": "Regulatory compliance requires immutable audit trail of all financial transactions for examination and dispute resolution.",
+      "consentImplications": "No PII shared; only transaction IDs, timestamps, amount hashes, and system metadata for audit purposes."
+    },
+    {
+      "target": "NotificationService",
+      "targetUri": "https://api.globaltransfer.example.com/services/notifications/v1/manifest",
+      "relationship": "notification.trigger",
+      "businessReason": "Customers must receive real-time status updates for transparency, fraud prevention, and regulatory compliance (Regulation E).",
+      "consentImplications": "Shares recipient contact information and transaction summary for status notifications."
+    },
+    {
+      "target": "IdentityProvider",
+      "targetUri": "https://api.globaltransfer.example.com/services/idp/v3/manifest",
+      "relationship": "auth.delegation",
+      "businessReason": "Centralized authentication and SSO for all financial services to enhance security and reduce attack surface.",
+      "consentImplications": "Shares user ID and session context; no password or sensitive authentication data."
+    },
+    {
+      "target": "CurrencyExchange",
+      "targetUri": "https://api.globaltransfer.example.com/services/fx-engine/v2/manifest",
+      "relationship": "data.provider.realtime",
+      "businessReason": "Real-time foreign exchange rates required for accurate currency conversion and transparent pricing display.",
+      "consentImplications": "No PII shared; read-only access to exchange rate data."
+    }
+  ]
+}
