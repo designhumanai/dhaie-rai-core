@@ -1,0 +1,198 @@
+{
+  "$comment": "SPDX-License-Identifier: Apache-2.0",
+  "$comment": "Copyright © Viktor Savitskiy, 1995-2025",
+  "$comment": "Part of DHAIE RAI Core: https://github.com/designhumanai/dhaie-rai-core",
+  "$comment": "",
+  "$comment": "DHAIE RAI Service Manifest - Patient Health Portal",
+  "$comment": "Demonstrates: HIPAA compliance, healthcare domain, PHI handling, multi-consent mechanisms",
+  "$comment": "Domain: Healthcare.PatientEngagement.Portal",
+  "$comment": "",
+  "$comment": "This is a reference implementation example for educational purposes.",
+  "$comment": "Licensed under Apache License 2.0. See LICENSE file for details.",
+  
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "dhaie": "https://designhumanai.com/ontology/v1#"
+  },
+  "@type": "dhaie:ReflexiveServiceManifest",
+  "@id": "https://api.healthsys.example.com/services/patient-portal/v3/manifest",
+  
+  "name": "Patient Health Portal",
+  "version": "3.2.1",
+  "dhaie:manifestVersion": "1.0",
+  
+  "description": "Secure web and mobile platform enabling patients to access medical records, communicate with providers, schedule appointments, and manage healthcare needs.",
+  
+  "dhaie:businessPurpose": "Empower patients with direct access to their health information and tools for active care management, improving health outcomes through engagement while reducing administrative burden on clinical staff.",
+  
+  "dhaie:domainContext": "Healthcare.PatientEngagement.Portal",
+  
+  "provider": {
+    "name": "HealthSys Medical Group - Digital Health Division",
+    "url": "https://www.healthsys.example.com/digital-health"
+  },
+  
+  "dhaie:operations": [
+    {
+      "name": "viewMedicalRecords",
+      "description": "Retrieve and display patient's electronic health records including diagnoses, medications, lab results, and treatment plans.",
+      "category": "dataQuery",
+      "mutates": false,
+      "piiFields": ["patientId", "medicalRecordNumber", "dateOfBirth", "diagnosisCodes", "medicationList"],
+      "auditRequired": true,
+      "$comment": "HIPAA requires audit trail for all PHI access"
+    },
+    {
+      "name": "secureMessageProvider",
+      "description": "Encrypted messaging between patients and healthcare providers for clinical communication and follow-up care.",
+      "category": "notification",
+      "mutates": true,
+      "piiFields": ["patientId", "providerId", "messageContent", "clinicalContext"],
+      "auditRequired": true
+    },
+    {
+      "name": "scheduleAppointment",
+      "description": "Book, reschedule, or cancel medical appointments with available providers based on specialty and availability.",
+      "category": "orchestration",
+      "mutates": true,
+      "piiFields": ["patientId", "preferredProvider", "appointmentReason", "insuranceInfo"],
+      "auditRequired": true
+    },
+    {
+      "name": "requestPrescriptionRefill",
+      "description": "Submit medication refill requests to prescribing providers with automated routing and status tracking.",
+      "category": "orchestration",
+      "mutates": true,
+      "piiFields": ["patientId", "medicationName", "prescribingProvider", "pharmacyPreference"],
+      "auditRequired": true
+    }
+  ],
+  
+  "dhaie:ethicalConstraints": [
+    {
+      "regulation": "HIPAA Privacy Rule",
+      "uri": "https://www.hhs.gov/hipaa/for-professionals/privacy/index.html",
+      "articles": ["45 CFR 164.502", "45 CFR 164.508", "45 CFR 164.524"],
+      "implementation": "End-to-end encryption for all PHI in transit and at rest. Role-based access control with minimum necessary principle. Patient consent required for all data access beyond treatment. Automatic session timeout after 15 minutes of inactivity.",
+      "verificationMethod": {
+        "type": "third_party_certification",
+        "tool": "HITRUST CSF Certified",
+        "policyUri": "https://policies.healthsys.example.com/hipaa-compliance",
+        "lastVerified": "2025-08-15"
+      }
+    },
+    {
+      "regulation": "HIPAA Security Rule",
+      "uri": "https://www.hhs.gov/hipaa/for-professionals/security/index.html",
+      "articles": ["45 CFR 164.308", "45 CFR 164.312", "45 CFR 164.316"],
+      "implementation": "Multi-factor authentication for all user accounts. Comprehensive audit logging of all system access. Regular vulnerability scanning and penetration testing. Data backup and disaster recovery procedures tested quarterly.",
+      "verificationMethod": {
+        "type": "continuous_monitoring",
+        "tool": "Tenable Security Center",
+        "lastVerified": "2025-10-05"
+      }
+    },
+    {
+      "regulation": "21st Century Cures Act",
+      "uri": "https://www.healthit.gov/curesrule",
+      "implementation": "Full patient access to electronic health information without blocking. API access for third-party applications with patient authorization. No information blocking practices implemented.",
+      "verificationMethod": {
+        "type": "automated_scan",
+        "tool": "ONC Cures Act Compliance Checker",
+        "lastVerified": "2025-10-10"
+      }
+    },
+    {
+      "regulation": "ADA Web Accessibility",
+      "uri": "https://www.ada.gov/resources/web-guidance/",
+      "implementation": "WCAG 2.1 AA compliance for all user interfaces. Screen reader compatibility, keyboard navigation, and high contrast modes. Accessible patient education materials in multiple formats.",
+      "verificationMethod": {
+        "type": "automated_scan",
+        "tool": "axe Accessibility Scanner",
+        "lastVerified": "2025-10-10"
+      }
+    }
+  ],
+  
+  "dhaie:consentMechanism": "explicit_consent_required",
+  
+  "dhaie:socialImpact": {
+    "metrics": [
+      {
+        "name": "healthcare_access_improvement",
+        "value": 67.3,
+        "baseline": 42.1,
+        "unit": "percentage",
+        "measurementMethod": "Patients able to access medical records within 24 hours of request vs traditional mail/office visit"
+      },
+      {
+        "name": "accessibility_improvement",
+        "value": 92.7,
+        "baseline": 68.3,
+        "unit": "percentage",
+        "measurementMethod": "WCAG 2.1 AA compliance score enabling access for patients with disabilities"
+      },
+      {
+        "name": "digital_divide_reduction",
+        "value": 58.2,
+        "baseline": 35.0,
+        "unit": "percentage",
+        "measurementMethod": "Percentage of previously non-digital patients now using online healthcare services"
+      }
+    ],
+    "description": "Increases healthcare access by 67.3% for rural and mobility-limited patients through digital availability. Reduces appointment no-shows by 38.5% via automated reminders, saving clinical resources. Improves medication adherence by 24.8% through refill management. Achieves 92.7% accessibility compliance, ensuring equitable access for patients with visual, motor, and cognitive disabilities across all demographic groups."
+  },
+  
+  "dhaie:semanticDependencies": [
+    {
+      "target": "EHR System",
+      "targetUri": "https://api.healthsys.example.com/services/ehr/v4/manifest",
+      "relationship": "data.provider.primary",
+      "businessReason": "Electronic Health Record system is the authoritative source for all clinical data including medical records, diagnoses, and treatment plans.",
+      "consentImplications": "Accesses comprehensive patient medical history including sensitive diagnoses, lab results, and treatment information with explicit patient consent."
+    },
+    {
+      "target": "ConsentManager",
+      "targetUri": "https://api.healthsys.example.com/services/consent/v2/manifest",
+      "relationship": "compliance.verification.mandatory",
+      "businessReason": "HIPAA requires explicit consent verification before any Protected Health Information (PHI) access. Centralized consent management ensures compliance across all healthcare services.",
+      "consentImplications": "Validates patient consent status and scope; no PHI shared with consent service."
+    },
+    {
+      "target": "IdentityProvider",
+      "targetUri": "https://api.healthsys.example.com/services/idp/v3/manifest",
+      "relationship": "auth.delegation",
+      "businessReason": "Centralized authentication and identity verification for all healthcare applications to ensure secure access and single sign-on experience.",
+      "consentImplications": "Shares user identity context; no clinical or PHI data exchanged."
+    },
+    {
+      "target": "AppointmentScheduler",
+      "targetUri": "https://api.healthsys.example.com/services/scheduler/v2/manifest",
+      "relationship": "orchestration.trigger",
+      "businessReason": "Appointment booking and management requires coordination with provider availability, room resources, and insurance verification systems.",
+      "consentImplications": "Shares patient identity, preferred providers, and appointment context for scheduling purposes."
+    },
+    {
+      "target": "PharmacySystem",
+      "targetUri": "https://api.healthsys.example.com/services/pharmacy/v1/manifest",
+      "relationship": "orchestration.coordinate",
+      "businessReason": "Prescription refill requests require coordination with pharmacy systems for inventory checking, insurance processing, and pickup notifications.",
+      "consentImplications": "Shares medication information, patient preferences, and pharmacy details for prescription management."
+    },
+    {
+      "target": "AnalyticsService",
+      "targetUri": "https://api.healthsys.example.com/services/analytics/v2/manifest",
+      "relationship": "data.consumer.analytics",
+      "businessReason": "Aggregated, de-identified usage data used to improve patient engagement, identify access barriers, and optimize healthcare delivery.",
+      "consentImplications": "No PHI shared; only anonymized usage patterns and engagement metrics for service improvement."
+    },
+    {
+      "target": "EmergencyAccessService",
+      "targetUri": "https://api.healthsys.example.com/services/emergency-access/v1/manifest",
+      "relationship": "auth.verification",
+      "businessReason": "Emergency break-glass access protocol required for critical care situations when normal consent mechanisms cannot be obtained.",
+      "consentImplications": "Emergency override with full audit trail and post-event justification requirement.",
+      "$comment": "Break-glass access is a critical healthcare pattern for life-threatening emergencies"
+    }
+  ]
+}
