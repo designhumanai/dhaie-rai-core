@@ -1,0 +1,164 @@
+{
+  "$comment": "SPDX-License-Identifier: Apache-2.0",
+  "$comment": "Copyright © Viktor Savitskiy, 1995-2025",
+  "$comment": "Part of DHAIE RAI Core: https://github.com/designhumanai/dhaie-rai-core",
+  "$comment": "",
+  "$comment": "DHAIE RAI Service Manifest - ML Fraud Detection Engine",
+  "$comment": "Demonstrates: ML ethics, algorithmic fairness, service-as-dependency pattern",
+  "$comment": "Domain: FinTech.RiskManagement.FraudDetection",
+  "$comment": "",
+  "$comment": "This is a reference implementation example for educational purposes.",
+  "$comment": "Licensed under Apache License 2.0. See LICENSE file for details.",
+  
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "dhaie": "https://designhumanai.com/ontology/v1#"
+  },
+  "@type": "dhaie:ReflexiveServiceManifest",
+  "@id": "https://api.globaltransfer.example.com/services/fraud-detector/v1/manifest",
+  
+  "name": "ML Fraud Detection Engine",
+  "version": "1.8.3",
+  "dhaie:manifestVersion": "1.0",
+  
+  "description": "Machine learning-powered transaction risk scoring system that analyzes patterns and behaviors to detect potential fraud in real-time.",
+  
+  "dhaie:businessPurpose": "Protect customers and financial institutions from fraudulent activities while minimizing false positives to ensure legitimate transactions proceed without unnecessary friction.",
+  
+  "dhaie:domainContext": "FinTech.RiskManagement.FraudDetection",
+  
+  "provider": {
+    "name": "GlobalTransfer FinTech Corp - Risk Analytics Division",
+    "url": "https://www.globaltransfer.example.com/risk-analytics"
+  },
+  
+  "dhaie:operations": [
+    {
+      "name": "scoreTransactionRisk",
+      "description": "Analyzes transaction patterns and user behavior to generate real-time fraud risk score (0-100).",
+      "category": "compute",
+      "mutates": false,
+      "piiFields": [],
+      "auditRequired": true,
+      "$comment": "No PII processed - operates on anonymized feature vectors"
+    },
+    {
+      "name": "explainRiskScore",
+      "description": "Provides human-readable explanation of risk factors contributing to a specific fraud score for regulatory compliance and customer transparency.",
+      "category": "dataQuery",
+      "mutates": false,
+      "piiFields": [],
+      "auditRequired": false
+    },
+    {
+      "name": "updateModel",
+      "description": "Retrains ML model with new labeled data to improve detection accuracy and adapt to emerging fraud patterns.",
+      "category": "admin",
+      "mutates": true,
+      "piiFields": [],
+      "auditRequired": true
+    }
+  ],
+  
+  "dhaie:ethicalConstraints": [
+    {
+      "regulation": "Algorithmic Fairness",
+      "uri": "https://www.ftc.gov/business-guidance/blog/2021/04/aiming-truth-fairness-and-equity-your-companys-use-ai",
+      "implementation": "ML model tested for bias across demographic groups using disparate impact analysis. Protected attributes removed from training data. Regular fairness audits conducted quarterly.",
+      "verificationMethod": {
+        "type": "continuous_monitoring",
+        "tool": "Fairlearn Bias Auditor",
+        "policyUri": "https://policies.globaltransfer.example.com/ai-fairness.rego",
+        "lastVerified": "2025-10-15"
+      }
+    },
+    {
+      "regulation": "GDPR Article 22",
+      "uri": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32016R0679",
+      "articles": ["Article 22"],
+      "implementation": "Automated decision-making (fraud scoring) includes human review option. Customers can request manual review of automated fraud decisions within 24 hours.",
+      "verificationMethod": {
+        "type": "manual_audit",
+        "tool": "Internal Compliance Review",
+        "lastVerified": "2025-10-01"
+      }
+    },
+    {
+      "regulation": "Model Transparency",
+      "uri": "https://www.whitehouse.gov/ostp/ai-bill-of-rights/",
+      "implementation": "All risk scores above threshold include explainable AI features showing contributing factors. Model cards published with performance metrics across demographic segments.",
+      "verificationMethod": {
+        "type": "automated_scan",
+        "tool": "MLflow Model Registry",
+        "lastVerified": "2025-10-10"
+      }
+    }
+  ],
+  
+  "dhaie:consentMechanism": "no_pii_processed",
+  
+  "dhaie:socialImpact": {
+    "metrics": [
+      {
+        "name": "cognitive_equity_score",
+        "value": 0.88,
+        "baseline": 0.65,
+        "unit": "index (0-1 scale)",
+        "measurementMethod": "Fairness-aware ML metric measuring equal performance across demographic groups"
+      },
+      {
+        "name": "accessibility_improvement",
+        "value": 42.7,
+        "baseline": 100.0,
+        "unit": "percentage reduction in false positives",
+        "measurementMethod": "Comparison with previous rule-based system false positive rate"
+      },
+      {
+        "name": "financial_inclusion_index",
+        "value": 0.73,
+        "baseline": 0.58,
+        "unit": "index (0-1 scale)",
+        "measurementMethod": "Transaction approval rate for underserved populations compared to baseline"
+      }
+    ],
+    "description": "Reduces false positives by 42.7%, preventing unnecessary transaction blocks that disproportionately affect underserved populations. Achieves 0.88 cognitive equity score by ensuring fair treatment across all demographic groups, particularly benefiting migrant workers and small business owners who historically face higher fraud scrutiny."
+  },
+  
+  "dhaie:semanticDependencies": [
+    {
+      "target": "PaymentService",
+      "targetUri": "https://api.globaltransfer.example.com/services/payment-engine/v2/manifest",
+      "relationship": "data.provider.realtime",
+      "businessReason": "Payment service provides transaction data for real-time risk assessment before processing payments.",
+      "consentImplications": "Receives anonymized transaction features; returns risk score. No PII transmitted."
+    },
+    {
+      "target": "FeatureStore",
+      "targetUri": "https://api.globaltransfer.example.com/services/feature-store/v2/manifest",
+      "relationship": "data.provider.realtime",
+      "businessReason": "Real-time access to anonymized transaction features and behavioral patterns for accurate risk scoring.",
+      "consentImplications": "Only anonymized feature vectors and transaction metadata shared. No PII."
+    },
+    {
+      "target": "ModelRegistry",
+      "targetUri": "https://api.globaltransfer.example.com/services/model-registry/v1/manifest",
+      "relationship": "data.provider.primary",
+      "businessReason": "Centralized model storage and version management for consistent fraud detection across all environments.",
+      "consentImplications": "No PII shared; only model binaries and configuration files."
+    },
+    {
+      "target": "AuditService",
+      "targetUri": "https://api.globaltransfer.example.com/services/audit/v1/manifest",
+      "relationship": "ledger.append_only",
+      "businessReason": "All risk scoring decisions and model updates must be logged for regulatory compliance and model performance monitoring.",
+      "consentImplications": "No PII shared; only anonymized scoring data, model metrics, and system events."
+    },
+    {
+      "target": "HumanReviewService",
+      "targetUri": "https://api.globaltransfer.example.com/services/human-review/v1/manifest",
+      "relationship": "orchestration.trigger",
+      "businessReason": "High-risk scores or customer disputes trigger human review workflow to comply with GDPR Article 22 and ensure fairness.",
+      "consentImplications": "Shares anonymized transaction features and risk scores only. No PII transmitted."
+    }
+  ]
+}
