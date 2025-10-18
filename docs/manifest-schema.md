@@ -3,7 +3,7 @@ SPDX-License-Identifier: CC-BY-NC-SA-4.0
 Copyright © Viktor Savitskiy, 1995–2025
 -->
 
-# DHAIE RAI Service Manifest Schema v1.0
+# DHAIE RAI Service Manifest Schema v1.1
 
 > **Semantic Self-Description for Reflexive AI Systems**
 >
@@ -15,7 +15,7 @@ Copyright © Viktor Savitskiy, 1995–2025
 
 The **DHAIE RAI Service Manifest** is the foundational contract of a Reflexive AI infrastructure. It is a machine-readable, semantically rich document that allows a service to declare not only *what* it does, but **why** it exists, **what** it means in a business context, **how** it complies with ethical and regulatory constraints, and **what relationships** it has with other services.
 
-This document specifies the structure, semantics, and intended use of the Service Manifest Schema v1.0.
+This document specifies the structure, semantics, and intended use of the Service Manifest Schema v1.1.
 
 ### Design Philosophy
 
