@@ -164,7 +164,6 @@ Docker Compose 2.20+
 ```
 
 ### Run the Demo
-
 ```bash
 git clone https://github.com/designhumanai/dhaie-rai-core
 cd dhaie-rai-core
@@ -179,6 +178,23 @@ docker-compose -f docker-compose.research.yml up
 docker-compose -f docker-compose.ethics.yml up
 ```
 
+### Validate Your Manifest
+```bash
+# For production manifests (strict validation)
+ajv validate -s schema/service-manifest.schema.json \
+             -d your-service.manifest.json \
+             --strict=true
+
+# For examples with $comment (relaxed validation)
+ajv validate -s schema/service-manifest.schema.json \
+             -d examples/*.manifest.json \
+             --strict=false
+```
+
+**Schema Version:** v1.1  
+**Manifest Version:** `"dhaie:manifestVersion": "1.1"`  
+**Changelog:** v1.1 adds $comment support and educational annotations
+
 **Access Points:**
 - 🌐 **Semantic Graph UI:** http://localhost:3000
 - 📊 **Observer API:** http://localhost:8080/graph
@@ -187,7 +203,6 @@ docker-compose -f docker-compose.ethics.yml up
 - 🎯 **Ethics Dashboard:** http://localhost:3001/ethics
 
 ### Example: Query Semantic Intent with Ethics
-
 ```bash
 # Get business purpose and ethical compliance of a service
 curl http://localhost:8080/graph/service/PaymentService
