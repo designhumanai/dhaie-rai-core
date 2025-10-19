@@ -17,6 +17,19 @@ The **DHAIE RAI Service Manifest** is the foundational contract of a Reflexive A
 
 This document specifies the structure, semantics, and intended use of the Service Manifest Schema v1.1.
 
+### What's New in v1.1
+
+**Released:** October 18, 2025
+
+- ✅ **`$comment` field support** for license headers and educational annotations
+- ✅ **Educational comments** added to schema for better developer guidance
+- ✅ **Comprehensive relationship taxonomy guide** in schema `$defs`
+- ✅ **Enhanced social impact metrics** descriptions with measurement examples
+- ✅ **Improved documentation** based on real reference implementation experience
+- ✅ **Full backward compatibility** with v1.0 manifests
+
+See [CHANGELOG.md](../CHANGELOG.md) for complete version history.
+
 ### Design Philosophy
 
 - **Meaning Before Mechanism:** The business purpose and intent are primary; technical details are secondary.
@@ -55,6 +68,8 @@ The Manifest acts as a **"service passport"** within the DHAIE RAI ecosystem. It
 
 - **Format:** JSON-LD 1.1
 - **JSON Schema:** Draft 2020-12 for validation
+- **Schema Version:** v1.1 (October 2025)
+- **Schema URL:** `https://designhumanai.com/schemas/service-manifest/v1.1/schema.json`
 - **Core Vocabulary:** Hybrid `schema.org` + `dhaie:` ontology
 - **RDF Compatible:** Can be converted to RDF/OWL for Neo4j knowledge graphs
 
@@ -87,6 +102,20 @@ The manifest is rooted in a hybrid ontology to ensure both external compatibilit
 
 ### 🆔 Top-Level Identity & Purpose
 
+#### `$comment` (v1.1+)
+- **Type:** `String` or `Array` of `String`
+- **Required:** ❌ No
+- **Description:** Optional metadata comments for documentation, license headers, and educational purposes. Ignored by validators but valuable for human readers.
+- **Best Practice:** Use for SPDX license identifiers, copyright notices, and inline documentation in reference implementations.
+- **Example:**
+  ```json
+  "$comment": "SPDX-License-Identifier: Apache-2.0",
+  "$comment": "Copyright © Viktor Savitskiy, 1995-2025",
+  "$comment": "Part of DHAIE RAI Core: https://github.com/designhumanai/dhaie-rai-core"
+  ```
+
+---
+
 #### `@id`
 - **Type:** `URI` (String, formatted as a Uniform Resource Identifier)
 - **Required:** ✅ Yes
@@ -108,6 +137,7 @@ The manifest is rooted in a hybrid ontology to ensure both external compatibilit
   - Min 3, max 100 characters
   - MUST match regex: `^[a-zA-Z0-9][ a-zA-Z0-9-]{0,98}[a-zA-Z0-9]$`
   - (letters, numbers, spaces, hyphens only; no leading/trailing whitespace)
+- **Best Practice:** Use business-friendly names, not technical identifiers. Example: "Cross-Border Payment Engine" not "payment-svc-v2".
 - **Example:**
   ```json
   "name": "Cross-Border Payment Engine"
@@ -118,7 +148,7 @@ The manifest is rooted in a hybrid ontology to ensure both external compatibilit
 #### `version`
 - **Type:** `String` (schema.org/Text)
 - **Required:** ✅ Yes
-- **Description:** The version of the service software implementation itself. Follows semantic versioning (MAJOR.MINOR.PATCH).
+- **Description:** The version of the service software implementation itself. Follows semantic versioning (MAJOR.MINOR.PATCH). This is the service version, not the manifest schema version.
 - **Format:** Semantic Versioning 2.0.0 (e.g., `2.5.1`, `1.0.0-beta.3`)
 - **Pattern:** `^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$`
 - **Example:**
@@ -132,10 +162,11 @@ The manifest is rooted in a hybrid ontology to ensure both external compatibilit
 - **Type:** `String`
 - **Required:** ✅ Yes
 - **Description:** The version of the DHAIE Service Manifest schema this document complies with. This allows for schema evolution and runtime validation against the correct specification.
-- **Format:** Fixed string for this specification: `"1.0"`
+- **Format:** Fixed string for this specification: `"1.1"`
+- **Note:** Validators MUST accept manifests with manifestVersion "1.0" or "1.1" (same MAJOR version = compatible per semantic versioning).
 - **Example:**
   ```json
-  "dhaie:manifestVersion": "1.0"
+  "dhaie:manifestVersion": "1.1"
   ```
 
 ---
@@ -155,8 +186,8 @@ The manifest is rooted in a hybrid ontology to ensure both external compatibilit
 #### `dhaie:businessPurpose`
 - **Type:** `String` (schema.org/Text)
 - **Required:** ✅ Yes
-- **Description:** A foundational field for reflexivity. A statement explaining the *raison d'être* of the service—the business value it provides and the problem it solves in the domain.
-- **Philosophy:** Answers "Why would a business pay for this to exist?" and "What human need does this serve?"
+- **Description:** **CRITICAL FIELD for reflexivity.** A statement explaining the *raison d'être* of the service—the business value it provides and the problem it solves in the domain.
+- **Philosophy:** Answers "Why would a business pay for this to exist?" and "What human need does this serve?" Focus on human value, not technical implementation.
 - **Constraints:** Min 20, max 700 characters. Should be a concise value proposition.
 - **Example:**
   ```json
@@ -173,7 +204,7 @@ The manifest is rooted in a hybrid ontology to ensure both external compatibilit
   - MUST match regex: `^[a-zA-Z][a-zA-Z0-9]*(?:\.[a-zA-Z][a-zA-Z0-9]*){2,}$`
   - Minimum 3 levels (e.g., `Domain.Subdomain.Capability`)
   - Letters and numbers only; no whitespace
-- **Best Practice:** Define a controlled vocabulary within your organization. Common top-level domains: `FinTech`, `Healthcare`, `Ecommerce`, `Manufacturing`, `Education`.
+- **Best Practice:** Define a controlled vocabulary within your organization. Common top-level domains: `FinTech`, `Healthcare`, `Ecommerce`, `Manufacturing`, `Education`. Format: Domain.Subdomain.Capability (e.g., FinTech.Payments.International).
 - **Examples:**
   ```json
   "dhaie:domainContext": "FinTech.Payments.International"
@@ -206,15 +237,19 @@ The manifest is rooted in a hybrid ontology to ensure both external compatibilit
 - **Type:** `Array` of `Object`
 - **Required:** ❌ No
 - **Description:** A list of the primary actions, capabilities, or operations the service exposes. This describes *what* the service can do at a functional level, enriched with semantic metadata about state changes, PII handling, and audit requirements.
+- **Best Practice:** Use category to group related operations. Declare primary service capabilities with semantic metadata about state changes, PII handling, and audit requirements.
 - **Object Fields:**
+  - `$comment` (String, Optional, v1.1+): Educational comment for this operation.
   - `name` (String, Required): A unique, machine-readable identifier for the operation.
     - MUST match regex: `^[a-z][a-zA-Z0-9]{2,49}$` (camelCase, 3-50 chars)
+    - Use verb-based names: initiateTransfer, scoreRisk, viewRecords
   - `description` (String, Required): A human-readable explanation of the operation. Min 10, max 300 characters.
   - `category` (String, Optional): A high-level grouping.
     - Allowed values: `financial`, `dataQuery`, `dataMutation`, `admin`, `compute`, `orchestration`, `notification`, `authentication`
-  - `mutates` (Boolean, Optional): Whether this operation changes system state (creates, updates, deletes data).
-  - `piiFields` (Array of String, Optional): List of PII field names involved in this operation. Each must match `^[a-zA-Z][a-zA-Z0-9_]*$`. Must be unique.
-  - `auditRequired` (Boolean, Optional): Whether this operation requires audit logging for compliance purposes.
+    - `compute` for stateless processing, `orchestration` for multi-service coordination
+  - `mutates` (Boolean, Optional): Whether this operation changes system state (creates, updates, deletes data). True for CREATE/UPDATE/DELETE, false for READ-only queries. Critical for understanding side effects.
+  - `piiFields` (Array of String, Optional): List of PII field names involved in this operation. Each must match `^[a-zA-Z][a-zA-Z0-9_]*$`. Must be unique. Triggers consentMechanism requirement at manifest level.
+  - `auditRequired` (Boolean, Optional): Whether this operation requires audit logging for compliance purposes. True for compliance-critical operations (financial transactions, PHI access, admin actions).
 - **Example:**
   ```json
   "dhaie:operations": [
@@ -224,7 +259,8 @@ The manifest is rooted in a hybrid ontology to ensure both external compatibilit
       "category": "financial",
       "mutates": true,
       "piiFields": ["accountNumber", "recipientName", "senderName"],
-      "auditRequired": true
+      "auditRequired": true,
+      "$comment": "Requires explicit consent due to PII handling"
     },
     {
       "name": "getTransactionHistory",
@@ -244,16 +280,20 @@ The manifest is rooted in a hybrid ontology to ensure both external compatibilit
 #### `dhaie:ethicalConstraints`
 - **Type:** `Array` of `Object`
 - **Required:** ✅ Yes (minimum 1 entry)
-- **Description:** A structured declaration of the ethical, legal, and regulatory frameworks that govern the service's operation. This is a core tenet of the DHAIE Reflexive AI principle, making constraints explicit and machine-readable.
+- **Description:** **REQUIRED FIELD. Every service must declare at least one ethical/regulatory constraint.** A structured declaration of the ethical, legal, and regulatory frameworks that govern the service's operation. This is a core tenet of the DHAIE Reflexive AI principle, making constraints explicit and machine-readable. This is foundational to DHAIE's ethical-by-design philosophy.
 - **Object Fields:**
-  - `regulation` (String, Required): The common name of the regulation or standard. Min 2, max 50 characters.
-  - `uri` (URI, Optional but strongly recommended): A direct link to the official text or authoritative definition of the constraint.
-  - `articles` (Array of String, Optional): Specific articles, sections, or rules within the regulation that are relevant. Each must match pattern `^[A-Z][a-zA-Z]+ \d+.*$` (e.g., "Article 6", "Section 1234"). Omit if not applicable. Must be unique.
-  - `implementation` (String, Required): A brief, human-readable description of how the service implements this constraint. Min 10, max 500 characters.
-  - `verificationMethod` (Object, Optional): Machine-actionable compliance verification.
+  - `regulation` (String, Required): The common name of the regulation or standard. Min 2, max 50 characters. Use widely recognized names: GDPR, HIPAA, SOC 2, ISO 27001, Algorithmic Fairness.
+  - `uri` (URI, Optional but strongly recommended): A direct link to the official text or authoritative definition of the constraint. Links to authoritative sources enable auditors to verify compliance claims.
+  - `articles` (Array of String, Optional): Specific articles, sections, or rules within the regulation that are relevant. Each must match pattern `^[A-Z][a-zA-Z]+ \d+.*$` (e.g., "Article 6", "Section 1234"). Format: 'Article 6(1)(a)', '45 CFR 164.502', 'Section 1234'. Omit if not applicable. Must be unique.
+  - `implementation` (String, Required): A brief, human-readable description of how the service implements this constraint. Min 10, max 500 characters. Be specific about technical controls and procedures. This is auditable documentation.
+  - `verificationMethod` (Object, Optional): Machine-actionable compliance verification. Include tools and last verification date for audit trails.
     - `type` (String, Required): Enum: `automated_scan`, `manual_audit`, `third_party_certification`, `continuous_monitoring`
-    - `tool` (String, Optional): Name of verification tool (e.g., "OpenPolicyAgent", "Vanta"). Max 100 characters.
-    - `policyUri` (URI, Optional): Link to the policy/rule definition.
+      - `automated_scan`: CI/CD integrated (e.g., policy-as-code)
+      - `manual_audit`: periodic reviews
+      - `third_party_certification`: external auditor
+      - `continuous_monitoring`: real-time compliance checking
+    - `tool` (String, Optional): Name of verification tool or certification body (e.g., "OpenPolicyAgent", "Vanta"). Max 100 characters.
+    - `policyUri` (URI, Optional): Link to machine-readable policy definition (e.g., OPA rego file).
     - `lastVerified` (String, Optional): ISO 8601 date of last verification (format: `YYYY-MM-DD`).
 - **Example:**
   ```json
@@ -283,9 +323,9 @@ The manifest is rooted in a hybrid ontology to ensure both external compatibilit
 #### `dhaie:consentMechanism`
 - **Type:** `String`
 - **Required:** ⚠️ Conditional
-  - Required if ANY of the following is true:
-    - Service processes PII (declared in `dhaie:operations[].piiFields`)
-    - Any `dhaie:semanticDependencies` entry has `consentImplications` field
+  - **REQUIRED if:** (1) any operation has piiFields, OR (2) any dependency has consentImplications.
+  - Use 'no_pii_processed' ONLY if truly no PII is handled.
+  - 'explicit_consent_required' is default for GDPR/CCPA compliance.
   - Otherwise, should be set to `"no_pii_processed"`
 - **Description:** Defines the primary mechanism by which user consent is obtained for data processing activities.
 - **Allowed Values (Controlled Vocabulary):**
@@ -304,16 +344,21 @@ The manifest is rooted in a hybrid ontology to ensure both external compatibilit
 #### `dhaie:socialImpact`
 - **Type:** `Object`
 - **Required:** ❌ No (but strongly encouraged for services with societal implications)
-- **Description:** Qualitative or quantitative metrics that describe the service's intended positive contribution to society or its alignment with DHAIE's cognitive equity principles.
+- **Description:** Optional but encouraged. Quantify positive societal contribution using standardized metrics. Critical for DHAIE's cognitive equity principles. Qualitative or quantitative metrics that describe the service's intended positive contribution to society or its alignment with DHAIE's cognitive equity principles.
 - **Object Fields:**
-  - `metrics` (Array of Object, Optional): Structured, measurable social impact indicators.
+  - `metrics` (Array of Object, Optional): Structured, measurable social impact indicators. Use standardized metric names from DHAIE taxonomy. Each metric must be an object with name, value, and optional baseline/unit/measurementMethod.
     - `name` (String, Required): Standardized metric name from DHAIE taxonomy.
       - Allowed values: `financial_inclusion_index`, `cross_border_cost_reduction`, `carbon_footprint_reduction`, `accessibility_improvement`, `cognitive_equity_score`, `digital_divide_reduction`, `healthcare_access_improvement`, `education_accessibility`
+      - **Examples of metrics:**
+        - `financial_inclusion_index`: 0-1 scale measuring access to financial services
+        - `cross_border_cost_reduction`: percentage savings vs baseline
+        - `accessibility_improvement`: WCAG compliance or similar
+        - `cognitive_equity_score`: fairness metric across demographic groups
     - `value` (Number, Required): The measured value.
-    - `baseline` (Number, Optional): Baseline value for comparison (what it was before this service).
-    - `unit` (String, Optional): Unit of measurement (e.g., "percentage", "index", "USD saved"). Max 50 characters.
-    - `measurementMethod` (String, Optional): How this metric is measured/calculated. Max 200 characters.
-  - `description` (String, Required): A narrative description of the social impact. Min 20, max 700 characters.
+    - `baseline` (Number, Optional): Baseline value for comparison (what it was before this service). What was the metric before this service? Essential for measuring improvement.
+    - `unit` (String, Optional): Unit of measurement (e.g., "percentage", "index", "USD saved"). Max 50 characters. Examples: 'percentage', 'index (0-1)', 'USD saved', 'users served'.
+    - `measurementMethod` (String, Optional): How this metric is measured/calculated. Max 200 characters. Cite methodology: 'World Bank Financial Inclusion Index', 'WCAG 2.1 AA compliance score', 'Gini coefficient calculation'.
+  - `description` (String, Required): A narrative description of the social impact. Min 20, max 700 characters. Tell the human story. Who benefits? How does this reduce inequality or improve lives? Complement quantitative metrics with qualitative context.
 - **Important:** The `metrics` array MUST contain objects with `name` and `value` fields, NOT simple strings. The old format `"metrics": ["financial_inclusion_index"]` is deprecated and will fail validation.
 - **Example:**
   ```json
@@ -345,73 +390,99 @@ The manifest is rooted in a hybrid ontology to ensure both external compatibilit
 #### `dhaie:semanticDependencies`
 - **Type:** `Array` of `Object`
 - **Required:** ❌ No
-- **Description:** Declares other services that this service relies upon to fulfill its purpose, enriching the basic "dependency" with the *semantic reason* for that dependency. This is crucial for the Semantic Observer to build an accurate knowledge graph and for Drift Detector to validate behavioral consistency.
+- **Description:** Declares other services that this service relies upon to fulfill its purpose, enriching the basic "dependency" with the *semantic reason* for that dependency. This is crucial for the Semantic Observer to build an accurate knowledge graph and for Drift Detector to validate behavioral consistency. Declare service dependencies with business context and consent implications. Use DHAIE Relationship Taxonomy for 'relationship' field. This is semantic architecture, not just technical integration.
 - **Object Fields:**
-  - `target` (String, Required): The `name` of the dependent-upon service. Min 3, max 100 characters.
-  - `targetUri` (URI, Optional but strongly recommended): The `@id` of the dependent-upon service's manifest for explicit semantic linking. MUST start with `https://`. Omit if not available.
-  - `relationship` (String, Required): The nature of the dependency from the DHAIE Relationship Taxonomy (see below).
-  - `businessReason` (String, Required): A clear explanation of *why* this dependency exists. Min 10, max 500 characters.
-  - `consentImplications` (String, Optional): Describes what data is shared with the dependency and implications for user consent. Min 10, max 300 characters. Omit if no data sharing occurs.
-  - `condition` (Object, Optional): Defines when this dependency is activated (conditional dependency).
-    - `when` (String, Required): Condition expression in pseudo-code or natural language. Max 200 characters.
+  - `$comment` (String, Optional, v1.1+): Educational comment for this dependency.
+  - `target` (String, Required): The `name` of the dependent-upon service. Min 3, max 100 characters. Use the service's 'name' field value, not technical hostname or service ID.
+  - `targetUri` (URI, Optional but strongly recommended): The `@id` of the dependent-upon service's manifest for explicit semantic linking. MUST start with `https://`. Omit if not available. Should point to target's @id field for explicit semantic linking. Strongly recommended for knowledge graph construction.
+  - `relationship` (String, Required): The nature of the dependency from the DHAIE Relationship Taxonomy (see below). DHAIE Relationship Taxonomy categorizes dependencies by business purpose, not technical implementation. data.provider.* = source of data, risk.assessment.* = risk/fraud checking, orchestration.* = workflow coordination, ledger.* = audit trail, auth.* = authentication/authorization. See manifest-schema.md for complete taxonomy reference.
+  - `businessReason` (String, Required): A clear explanation of *why* this dependency exists. Min 10, max 500 characters. **CRITICAL:** Explain the business/regulatory/operational need, not just 'we call this API'. Example: 'AML regulation requires risk scoring for transactions >$10k' not 'calls fraud detection service'.
+  - `consentImplications` (String, Optional): Describes what data is shared with the dependency and implications for user consent. Min 10, max 300 characters. Omit if no data sharing occurs. Be explicit about data sharing. If present, parent service MUST declare consentMechanism. State 'No PII shared' when applicable.
+  - `condition` (Object, Optional): Defines when this dependency is activated (conditional dependency). Conditional dependencies model business rules. Use pseudo-code or natural language for 'when'. Do NOT add $comment inside condition object (violates additionalProperties).
+    - `when` (String, Required): Condition expression in pseudo-code or natural language. Max 200 characters. Examples: 'transaction.amount.usd > 10000', 'user.tier == premium', 'risk_score > 80 OR manual_review_requested'.
     - `enforcementLevel` (String, Required): Enum: `mandatory`, `recommended`, `optional`
+      - `mandatory`: always enforced (hard requirement)
+      - `recommended`: best practice but skippable
+      - `optional`: optimization/enhancement only
 
 ---
 
 ### 📚 DHAIE Relationship Taxonomy
 
+**Quick reference for choosing correct relationship types.**
+
 **Category: Data Flow**
 - `data.provider.primary` — *This dependency is the authoritative source of data*
+  - Authoritative source (e.g., CRM → Customer data)
   - Example: "Customer profile data comes from the CRM service"
 - `data.provider.cache` — *This dependency provides cached/replicated data*
+  - Cached/replicated data (e.g., CDN → Product catalog)
   - Example: "Uses cached product catalog from the CDN service"
 - `data.provider.realtime` — *This dependency streams real-time data*
+  - Streaming data (e.g., Market ticker → Price feed)
   - Example: "Consumes real-time market prices from the ticker service"
 - `data.consumer.analytics` — *This dependency consumes our data for analytics*
+  - Analytics destination (e.g., Transactions → BI warehouse)
   - Example: "Transaction data is sent to the BI warehouse"
 - `data.consumer.backup` — *This dependency stores backup copies of our data*
+  - Backup storage (e.g., Daily snapshots → Archive)
   - Example: "Daily snapshots are sent to the archive service"
 - `data.consumer.export` — *This dependency receives data for external export*
+  - External export (e.g., Reports → Regulatory filing)
   - Example: "Sends financial reports to the regulatory filing service"
 
 **Category: Risk & Compliance**
 - `risk.assessment.required` — *Mandatory risk evaluation before proceeding*
+  - Mandatory risk check (e.g., AML screening)
   - Example: "Fraud check is required for all transactions"
 - `risk.assessment.optional` — *Optional risk scoring for optimization*
+  - Optional risk scoring (e.g., Credit check for premium)
   - Example: "Credit score check for premium tier users"
 - `compliance.verification.mandatory` — *Required compliance check*
+  - Required compliance (e.g., GDPR consent check)
   - Example: "AML screening is legally required for cross-border payments"
 - `compliance.verification.optional` — *Optional compliance enhancement*
+  - Optional enhancement (e.g., Enhanced due diligence)
   - Example: "Enhanced due diligence for high-value customers"
 
 **Category: Orchestration**
 - `orchestration.trigger` — *This service initiates a workflow in the dependency*
+  - Initiates workflow (e.g., Payment → Fulfillment)
   - Example: "Triggers the order fulfillment workflow after payment confirmation"
 - `orchestration.coordinate` — *This service coordinates with the dependency in a saga/choreography*
+  - Saga/choreography (e.g., Inventory reservation)
   - Example: "Coordinates inventory reservation with the warehouse service"
 
 **Category: Computation**
 - `computation.specialized` — *Offloads specialized computation*
+  - ML/specialized compute (e.g., Recommendation engine)
   - Example: "Offloads ML inference to the recommendation engine"
 - `computation.offload` — *Offloads general heavy computation*
+  - General processing (e.g., PDF generation)
   - Example: "Offloads PDF generation to the document service"
 
 **Category: Notifications**
 - `notification.trigger` — *Triggers a notification to be sent*
+  - Send notification (e.g., Payment confirmation email)
   - Example: "Sends payment confirmation email via the notification service"
 - `notification.subscribe` — *Subscribes to notifications from the dependency*
+  - Receive alerts (e.g., Low inventory alert)
   - Example: "Receives alerts when inventory is low"
 
 **Category: Authentication & Authorization**
 - `auth.delegation` — *Delegates authentication to this service*
+  - SSO/authentication (e.g., Identity provider)
   - Example: "Uses SSO via the identity provider service"
 - `auth.verification` — *Verifies authentication tokens/credentials*
+  - Token validation (e.g., JWT verification)
   - Example: "Validates JWT tokens against the auth service"
 
 **Category: Ledger & Audit**
 - `ledger.append_only` — *Writes immutable audit logs*
+  - Immutable audit log (e.g., Blockchain ledger)
   - Example: "Appends transaction records to the blockchain ledger"
 - `ledger.query` — *Queries historical audit data*
+  - Historical audit queries (e.g., Compliance database)
   - Example: "Retrieves audit trail from the compliance database"
 
 ---
@@ -466,9 +537,16 @@ All manifests MUST validate against the official JSON Schema file: `schema/servi
 **Using AJV (Node.js):**
 ```bash
 npm install -g ajv-cli ajv-formats
+
+# For production manifests (strict validation)
 ajv validate -s schema/service-manifest.schema.json \
              -d examples/payment-service.manifest.json \
              --strict=true
+
+# For examples with $comment (relaxed validation)
+ajv validate -s schema/service-manifest.schema.json \
+             -d examples/*.manifest.json \
+             --strict=false
 ```
 
 **Using Python (jsonschema):**
@@ -640,6 +718,21 @@ The DHAIE Manifest Schema follows **Semantic Versioning 2.0.0**:
 - Deprecated fields will be documented in `CHANGELOG.md` with migration guidance.
 - Removal of deprecated fields triggers a MAJOR version bump.
 
+### Changelog v1.1
+
+**Added:**
+- Support for `$comment` field at root and within operations/dependencies
+- Educational `$comment` annotations on 15+ key properties
+- Enhanced descriptions for social impact metrics
+- Improved guidance on relationship taxonomy usage
+- Examples in `$defs` based on reference implementations
+
+**Unchanged:**
+- All required fields remain the same
+- All enum values unchanged
+- All validation rules preserved
+- Full backward compatibility maintained
+
 ---
 
 ## 💻 Implementation Guidelines
@@ -685,6 +778,11 @@ Use the `condition` field to model business rules:
 - `@id` and `targetUri` MUST be persistent and versioned.
 - Bad: `https://staging.example.com/temp/service123`
 - Good: `https://api.example.com/services/payment-engine/v2/manifest`
+
+#### 7. **Use `$comment` for Educational Value (v1.1+)**
+- Include SPDX license identifiers in header comments
+- Add domain-specific context (e.g., "HIPAA requires audit trail")
+- Explain non-obvious business rules in conditional dependencies
 
 ---
 
@@ -746,7 +844,8 @@ jobs:
         run: |
           npm install -g ajv-cli
           ajv validate -s schema/service-manifest.schema.json \
-                       -d "manifests/*.json"
+                       -d "manifests/*.json" \
+                       --strict=false
       - name: Semantic Coherence Check
         run: python scripts/validate-semantic-coherence.py
 ```
@@ -883,241 +982,36 @@ jobs:
 
 ---
 
-## 📚 Domain-Specific Examples
+## 📚 Reference Implementation Examples
+
+Complete, validated examples are available in the `examples/` directory:
 
 ### Example 1: FinTech Payment Service
-```json
-{
-  "@context": {
-    "@vocab": "https://schema.org/",
-    "dhaie": "https://designhumanai.com/ontology/v1#"
-  },
-  "@type": "dhaie:ReflexiveServiceManifest",
-  "@id": "https://api.example.com/services/payment-engine/v2/manifest",
-  "name": "Cross-Border Payment Engine",
-  "version": "2.5.1",
-  "dhaie:manifestVersion": "1.0",
-  "description": "Processes international fiat currency transactions using SWIFT and SEPA protocols with real-time fraud detection.",
-  "dhaie:businessPurpose": "Enable fast, secure, and cost-effective cross-border monetary transfers for migrant workers, reducing economic friction and promoting financial inclusion in underserved markets.",
-  "dhaie:domainContext": "FinTech.Payments.International",
-  "provider": {
-    "name": "Example FinTech Corp",
-    "url": "https://www.example.com"
-  },
-  "dhaie:ethicalConstraints": [
-    {
-      "regulation": "GDPR",
-      "uri": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32016R0679",
-      "articles": ["Article 6(1)(a)", "Article 7"],
-      "implementation": "Explicit user consent obtained before processing. Right to erasure implemented via DELETE /users/{id}/data endpoint.",
-      "verificationMethod": {
-        "type": "automated_scan",
-        "tool": "OneTrust Privacy Automation",
-        "lastVerified": "2025-10-01"
-      }
-    },
-    {
-      "regulation": "AML",
-      "uri": "https://www.fincen.gov/resources/statutes-regulations",
-      "implementation": "Transactions >$10k trigger mandatory risk assessment and FinCEN reporting within 24h."
-    }
-  ],
-  "dhaie:consentMechanism": "explicit_consent_required",
-  "dhaie:consentMechanism": "explicit_consent_required",
-  "dhaie:socialImpact": {
-    "metrics": [
-      {
-        "name": "financial_inclusion_index",
-        "value": 0.73,
-        "baseline": 0.45,
-        "unit": "index",
-        "measurementMethod": "World Bank Financial Inclusion Index"
-      }
-    ],
-    "description": "Reduces average remittance cost by 54%, saving migrant workers $2.1B annually."
-  },
-  "dhaie:operations": [
-    {
-      "name": "fundsTransfer",
-      "description": "Initiates international money transfer with fraud detection and compliance checks.",
-      "category": "financial",
-      "mutates": true,
-      "piiFields": ["accountNumber", "recipientName", "senderName"],
-      "auditRequired": true
-    }
-  ],
-  "dhaie:semanticDependencies": [
-    {
-      "target": "FraudDetector",
-      "targetUri": "https://api.example.com/services/fraud-detector/v1/manifest",
-      "relationship": "risk.assessment.required",
-      "businessReason": "AML regulation requires risk scoring for transactions >$10k.",
-      "consentImplications": "Shares transaction amount, geolocation, and account metadata.",
-      "condition": {
-        "when": "transaction.amount.usd > 10000",
-        "enforcementLevel": "mandatory"
-      }
-    }
-  ]
-}
-```
+**File:** `examples/payment-service.manifest.json`
 
----
+Demonstrates:
+- Conditional dependencies with business rules
+- AML/GDPR compliance declarations
+- Social impact metrics (financial inclusion, cost reduction)
+- Cross-border payment complexity
 
-### Example 2: Healthcare Patient Portal
-```json
-{
-  "@context": {
-    "@vocab": "https://schema.org/",
-    "dhaie": "https://designhumanai.com/ontology/v1#"
-  },
-  "@type": "dhaie:ReflexiveServiceManifest",
-  "@id": "https://api.healthsys.example.com/services/patient-portal/v1/manifest",
-  "name": "Patient Portal",
-  "version": "1.3.0",
-  "dhaie:manifestVersion": "1.0",
-  "description": "Secure web and mobile interface for patients to access medical records, schedule appointments, and communicate with providers.",
-  "dhaie:businessPurpose": "Empower patients with direct access to their health information, improving care coordination and reducing administrative burden on clinical staff.",
-  "dhaie:domainContext": "Healthcare.PatientEngagement.Portal",
-  "provider": {
-    "name": "HealthSys Digital Health Division",
-    "url": "https://www.healthsys.example.com"
-  },
-  "dhaie:ethicalConstraints": [
-    {
-      "regulation": "HIPAA",
-      "uri": "https://www.hhs.gov/hipaa/",
-      "articles": ["Privacy Rule 164.502", "Security Rule 164.306"],
-      "implementation": "End-to-end encryption for all PHI. Access logs maintained for 7 years. Patient consent required for third-party data sharing.",
-      "verificationMethod": {
-        "type": "third_party_certification",
-        "tool": "HITRUST CSF Certification",
-        "lastVerified": "2025-08-15"
-      }
-    }
-  ],
-  "dhaie:consentMechanism": "explicit_consent_required",
-  "dhaie:socialImpact": {
-    "metrics": [
-      {
-        "name": "healthcare_access_improvement",
-        "value": 67.3,
-        "baseline": 42.1,
-        "unit": "percentage",
-        "measurementMethod": "Patients able to access records within 24h"
-      }
-    ],
-    "description": "Increases patient engagement by 60% and reduces appointment no-shows by 40% through automated reminders."
-  },
-  "dhaie:operations": [
-    {
-      "name": "viewMedicalRecords",
-      "description": "Retrieve patient's electronic health records including diagnoses, medications, and test results.",
-      "category": "dataQuery",
-      "mutates": false,
-      "piiFields": ["patientId", "dateOfBirth", "medicalRecordNumber"],
-      "auditRequired": true
-    }
-  ],
-  "dhaie:semanticDependencies": [
-    {
-      "target": "EHR System",
-      "targetUri": "https://api.healthsys.example.com/services/ehr/v4/manifest",
-      "relationship": "data.provider.primary",
-      "businessReason": "EHR is the authoritative source for all clinical data.",
-      "consentImplications": "Accesses full patient medical history including sensitive diagnoses."
-    },
-    {
-      "target": "ConsentManager",
-      "targetUri": "https://api.healthsys.example.com/services/consent/v2/manifest",
-      "relationship": "compliance.verification.mandatory",
-      "businessReason": "HIPAA requires explicit consent verification before any PHI access.",
-      "consentImplications": "Validates patient consent status; no PHI shared."
-    }
-  ]
-}
-```
+### Example 2: ML Fraud Detection Engine
+**File:** `examples/fraud-detector.manifest.json`
 
----
+Demonstrates:
+- ML ethics and algorithmic fairness
+- Service-as-dependency pattern
+- No PII processing with consent mechanism
+- Cognitive equity scoring
 
-### Example 3: E-commerce Product Catalog
-```json
-{
-  "@context": {
-    "@vocab": "https://schema.org/",
-    "dhaie": "https://designhumanai.com/ontology/v1#"
-  },
-  "@type": "dhaie:ReflexiveServiceManifest",
-  "@id": "https://api.shop.example.com/services/product-catalog/v3/manifest",
-  "name": "Product Catalog Service",
-  "version": "3.2.0",
-  "dhaie:manifestVersion": "1.0",
-  "description": "Manages product inventory, pricing, availability, and search indexing for the e-commerce platform.",
-  "dhaie:businessPurpose": "Provide fast, accurate, and personalized product discovery to customers, increasing conversion rates and reducing cart abandonment.",
-  "dhaie:domainContext": "Ecommerce.Catalog.Management",
-  "provider": {
-    "name": "ShopCo Engineering",
-    "url": "https://www.shop.example.com"
-  },
-  "dhaie:ethicalConstraints": [
-    {
-      "regulation": "Accessibility Standards (WCAG 2.1 AA)",
-      "uri": "https://www.w3.org/WAI/WCAG21/quickref/",
-      "implementation": "All product images have alt text. Search supports screen readers. Color contrast ratios meet AA standards."
-    },
-    {
-      "regulation": "Consumer Protection (FTC)",
-      "uri": "https://www.ftc.gov/legal-library",
-      "implementation": "Pricing displayed clearly with no hidden fees. Out-of-stock items marked prominently."
-    }
-  ],
-  "dhaie:consentMechanism": "no_pii_processed",
-  "dhaie:socialImpact": {
-    "metrics": [
-      {
-        "name": "accessibility_improvement",
-        "value": 95.2,
-        "baseline": 67.8,
-        "unit": "percentage",
-        "measurementMethod": "WCAG 2.1 AA compliance score via automated testing"
-      }
-    ],
-    "description": "Achieves 95% WCAG compliance, enabling visually impaired users to independently browse and purchase products."
-  },
-  "dhaie:operations": [
-    {
-      "name": "searchProducts",
-      "description": "Full-text search with filters for category, price, rating, and availability.",
-      "category": "dataQuery",
-      "mutates": false,
-      "auditRequired": false
-    },
-    {
-      "name": "updateInventory",
-      "description": "Updates product stock levels and availability status.",
-      "category": "dataMutation",
-      "mutates": true,
-      "auditRequired": true
-    }
-  ],
-  "dhaie:semanticDependencies": [
-    {
-      "target": "RecommendationEngine",
-      "targetUri": "https://api.shop.example.com/services/recommendations/v2/manifest",
-      "relationship": "computation.specialized",
-      "businessReason": "ML-powered personalized recommendations increase conversion by 30%.",
-      "consentImplications": "Shares anonymized browsing history; no PII."
-    },
-    {
-      "target": "PricingService",
-      "targetUri": "https://api.shop.example.com/services/pricing/v1/manifest",
-      "relationship": "data.provider.realtime",
-      "businessReason": "Dynamic pricing adjusts based on demand, competitor prices, and promotions.",
-      "consentImplications": "No data sharing; read-only access to pricing data."
-    }
-  ]
-}
-```
+### Example 3: Healthcare Patient Portal
+**File:** `examples/patient-portal.manifest.json`
+
+Demonstrates:
+- HIPAA compliance and PHI handling
+- Multi-consent mechanisms
+- Emergency break-glass access patterns
+- Healthcare accessibility metrics
 
 ---
 
@@ -1237,7 +1131,7 @@ For services using ML models:
 }
 ```
 
----
+#### Error: `"Unknown relationship type"`
 **Solution:** Use exact enum values from DHAIE Relationship Taxonomy.
 ```json
 // ❌ Bad
@@ -1293,12 +1187,13 @@ For services using ML models:
 
 | Field | Required | Type | Purpose |
 |-------|----------|------|---------|
+| `$comment` | ❌ | String/Array | License headers, educational annotations (v1.1+) |
 | `@context` | ✅ | Object | JSON-LD vocabulary definition |
 | `@type` | ✅ | String | RDF type (always `dhaie:ReflexiveServiceManifest`) |
 | `@id` | ✅ | URI | Globally unique manifest identifier |
 | `name` | ✅ | String | Human-readable service name |
 | `version` | ✅ | String | Service implementation version (semver) |
-| `dhaie:manifestVersion` | ✅ | String | Schema version (currently `"1.0"`) |
+| `dhaie:manifestVersion` | ✅ | String | Schema version (currently `"1.1"`) |
 | `description` | ✅ | String | Technical summary of functionality |
 | `dhaie:businessPurpose` | ✅ | String | Why the service exists (business value) |
 | `dhaie:domainContext` | ✅ | String | Location in business architecture |
