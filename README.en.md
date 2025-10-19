@@ -5,15 +5,16 @@ Copyright © Viktor Savitskiy, 1995–2025
 
 # DHAIE RAI Core
 
-## Reflexive AI Infrastructure — Semantic Self-Describing Systems
+## Reflexive AI Infrastructure – Semantic Self-Describing Systems
 
 [![Apache-2.0](https://img.shields.io/badge/Code-Apache--2.0-blue.svg?style=for-the-badge)](LICENSE)
 [![CC BY-NC-SA 4.0](https://img.shields.io/badge/Docs-CC_BY_NC_SA_4.0-lightgrey.svg?style=for-the-badge)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [![Research Grade](https://img.shields.io/badge/Research-Grade_Prototype-8A2BE2.svg?style=for-the-badge)](#research-context)
 [![DHAIE ECS: 92%](https://img.shields.io/badge/DHAIE_ECS-92%25-green.svg?style=for-the-badge)](ETHICS.md)
 [![Dependencies](https://img.shields.io/badge/Dependencies-Apache_2.0_Compatible-success.svg?style=for-the-badge)](DEPENDENCIES.md)
+[![Schema v1.1](https://img.shields.io/badge/Schema-v1.1-success.svg?style=for-the-badge)](#schema-v11-release)
 
-**🌐 Language:** **English** | [Русский](README.md)
+**🌍 Language:** **English** | [Русский](README.md)
 
 > **"We bridge the semantic gap between system behavior and human understanding"**
 
@@ -37,7 +38,7 @@ Copyright © Viktor Savitskiy, 1995–2025
 
 ## 💡 Research-Grade Solution
 
-DHAIE RAI implements **Semantic Reflexivity** — a research concept from DARPA's Explainable AI (XAI) program and Stanford HAI's Human-AI Collaboration framework.
+DHAIE RAI implements **Semantic Reflexivity** – a research concept from DARPA's Explainable AI (XAI) program and Stanford HAI's Human-AI Collaboration framework.
 
 ### Scientific Foundation
 
@@ -88,41 +89,48 @@ POST /v1/transfer
 ## 🗂️ What's Inside: Research to Production
 
 ### Phase 0: Semantic Foundation (Research Complete ✅)
-- **Semantic Manifest Protocol** — JSON-LD schema with W3C compliance
-- **Intent Modeling** — Based on MIT Human-AI Collaboration frameworks
-- **Knowledge Representation** — RDF/OWL compatible semantic graphs
-- **Ethical Impact Framework** — Integrated DHAIE compliance scoring
+- **Semantic Manifest Protocol** – JSON-LD schema with W3C compliance
+- **Intent Modeling** – Based on MIT Human-AI Collaboration frameworks
+- **Knowledge Representation** – RDF/OWL compatible semantic graphs
+- **Ethical Impact Framework** – Integrated DHAIE compliance scoring
 
-**Deliverable:** `service-manifest.jsonld` specification + reference implementation
+**Deliverable:** `service-manifest.jsonld` specification v1.1 + reference implementations
+
+**Latest Update (v1.1, October 2025):**
+- ✅ Added `$comment` field support for license headers and educational annotations
+- ✅ Enhanced schema with educational comments on 18+ key properties
+- ✅ Comprehensive relationship taxonomy guide in schema definitions
+- ✅ Full backward compatibility with v1.0 manifests
+- ✅ Three validated reference implementations (FinTech, Healthcare, ML Ethics)
 
 ### Phase 1: Cognitive Integration (Active Development 🔄)
-- **Semantic Observer** — Real-time architecture intelligence aggregator
-- **Dynamic Knowledge Graph** — Neo4j-powered semantic topology
-- **Interactive Visualization** — React + D3.js dashboard showing meaning flows
-- **Consent Verification Layer** — Automated consent tracking and validation
+- **Semantic Observer** – Real-time architecture intelligence aggregator
+- **Dynamic Knowledge Graph** – Neo4j-powered semantic topology
+- **Interactive Visualization** – React + D3.js dashboard showing meaning flows
+- **Consent Verification Layer** – Automated consent tracking and validation
 
 **Deliverable:** Working prototype demonstrating self-describing microservices
 
 ### Phase 2: Reflexive Integrity (Research Roadmap 🔮)
-- **Drift Detector** — DARPA-style assurance of declared vs actual behavior
-- **Ethical Guardrails** — Automated compliance checking against declared purpose
-- **Self-Healing Architecture** — MIT-style system dynamics for autonomous correction
-- **Social Impact Monitor** — Real-time cognitive equity metrics
+- **Drift Detector** – DARPA-style assurance of declared vs actual behavior
+- **Ethical Guardrails** – Automated compliance checking against declared purpose
+- **Self-Healing Architecture** – MIT-style system dynamics for autonomous correction
+- **Social Impact Monitor** – Real-time cognitive equity metrics
 
 **Deliverable:** Production-ready semantic observability platform
 
 ---
 
-## 🏗️ Architecture Overview
+## 🗃️ Architecture Overview
 
 ```
-┌──────────────────────────────────────────────────────────┐
-│              Semantic Observer                           │
-│         (Knowledge Graph Builder)                        │
+┌────────────────────────────────────────────────────────┐
+│              Semantic Observer                         │
+│         (Knowledge Graph Builder)                      │
 │  ┌──────────────────────────────────────────────────┐  │
-│  │        Neo4j Semantic Storage                     │  │
-│  │    (Business Intent + Dependencies Graph)         │  │
-│  │    + DHAIE Ethical Compliance Scoring            │  │
+│  │        Neo4j Semantic Storage                   │  │
+│  │    (Business Intent + Dependencies Graph)       │  │
+│  │    + DHAIE Ethical Compliance Scoring          │  │
 │  └──────────────────────────────────────────────────┘  │
 └────────────┬──────────────────┬────────────────────────┘
              │                  │
@@ -179,7 +187,15 @@ docker-compose -f docker-compose.ethics.yml up
 ```
 
 ### Validate Your Manifest
+
+**Schema Version:** v1.1 (October 2025)  
+**Manifest Version:** `"dhaie:manifestVersion": "1.1"`  
+**Changelog:** See [CHANGELOG.md](CHANGELOG.md) for complete version history
+
 ```bash
+# Install validator
+npm install -g ajv-cli ajv-formats
+
 # For production manifests (strict validation)
 ajv validate -s schema/service-manifest.schema.json \
              -d your-service.manifest.json \
@@ -191,9 +207,11 @@ ajv validate -s schema/service-manifest.schema.json \
              --strict=false
 ```
 
-**Schema Version:** v1.1  
-**Manifest Version:** `"dhaie:manifestVersion": "1.1"`  
-**Changelog:** v1.1 adds $comment support and educational annotations
+**What's New in v1.1:**
+- ✅ `$comment` field support for educational annotations
+- ✅ Enhanced property descriptions with guidance
+- ✅ Relationship taxonomy quick reference in schema
+- ✅ Full backward compatibility with v1.0
 
 **Access Points:**
 - 🌐 **Semantic Graph UI:** http://localhost:3000
@@ -463,17 +481,17 @@ Based on peer-reviewed work from:
 
 ### 👨‍🎓 PhD Thesis Topics
 
-1. **"Semantic Drift in Microservice Architectures"** — Detection and mitigation strategies
-2. **"Cognitive Load Reduction through Intent-Aware Systems"** — Human factors study  
-3. **"Ethical Compliance Validation via Semantic Manifests"** — Automated regulatory checking
-4. **"Consent Management in Distributed AI Systems"** — Novel DHAIE ethics implementation
+1. **"Semantic Drift in Microservice Architectures"** – Detection and mitigation strategies
+2. **"Cognitive Load Reduction through Intent-Aware Systems"** – Human factors study  
+3. **"Ethical Compliance Validation via Semantic Manifests"** – Automated regulatory checking
+4. **"Consent Management in Distributed AI Systems"** – Novel DHAIE ethics implementation
 
 ### 💰 Grant Opportunities
 
-- **DARPA AI Exploration** (Due: March 2025) — Explainable AI infrastructure
-- **NSF Human-AI Collaboration** (Due: May 2025) — Cognitive systems research
-- **EU Horizon Europe** (Due: June 2025) — Trustworthy AI systems
-- **DHAIE Ethics Research Fund** (Due: Ongoing) — Ethical AI infrastructure
+- **DARPA AI Exploration** (Due: March 2025) – Explainable AI infrastructure
+- **NSF Human-AI Collaboration** (Due: May 2025) – Cognitive systems research
+- **EU Horizon Europe** (Due: June 2025) – Trustworthy AI systems
+- **DHAIE Ethics Research Fund** (Due: Ongoing) – Ethical AI infrastructure
 
 ### 📊 Data Availability
 
@@ -551,7 +569,7 @@ https://github.com/designhumanai/dhaie-rai-datasets
 - [x] Implement manifest endpoint protocol
 - [x] Create reference implementations (Java/Spring, Python/FastAPI)
 - [x] Integrate DHAIE ethical compliance framework
-- [ ] Publish schema specification v1.0
+- [x] Publish schema specification v1.1 with educational enhancements
 
 ### Days 31–60: Integration 🔄
 - [ ] Build Semantic Observer service
@@ -578,7 +596,7 @@ https://github.com/designhumanai/dhaie-rai-datasets
 
 ## 🌿 Philosophy: From DHAIE Principles
 
-**DHAIE RAI** is the practical realization of the [DHAIE Project](https://github.com/designhumanai/design-human-ai) — a 30-year research initiative (since 1995) exploring human-AI co-evolution through cognitive science, phenomenology, and engineering.
+**DHAIE RAI** is the practical realization of the [DHAIE Project](https://github.com/designhumanai/design-human-ai) – a 30-year research initiative (since 1995) exploring human-AI co-evolution through cognitive science, phenomenology, and engineering.
 
 ### Core DHAIE Principles Applied
 
@@ -591,21 +609,21 @@ https://github.com/designhumanai/dhaie-rai-datasets
 | **Emergent** | Knowledge graph | Complex adaptive systems |
 
 **Key Insight:**
-> Systems should not just function — they should **understand their function** and be able to explain it in terms meaningful to humans. This is not anthropomorphism, but an engineering requirement for explainable AI infrastructure.
+> Systems should not just function – they should **understand their function** and be able to explain it in terms meaningful to humans. This is not anthropomorphism, but an engineering requirement for explainable AI infrastructure.
 
 ---
 
 ## 📚 Documentation
 
-- **[Research Protocol](./docs/research-protocol.en.md)** — Experimental design and validation methodology
-- **[Manifest Schema](./docs/manifest-schema.md)** — JSON-LD specification (W3C compliant)
-- **[Integration Guide](./docs/integration.en.md)** — Add semantic self-description to your services
-- **[Semantic Modeling Patterns](./docs/patterns.en.md)** — Domain-specific examples
-- **[API Reference](./docs/api.en.md)** — Semantic Observer REST API
-- **[Validation Framework](./docs/validation.en.md)** — Metrics and statistical analysis
-- **[Comparison Study](./docs/comparison.en.md)** — vs. OpenTelemetry, Backstage, Istio
-- **[Ethical Compliance Guide](./docs/ethics-compliance.en.md)** — DHAIE ECS integration
-- **[Consent Management](./docs/consent-management.en.md)** — User consent implementation
+- **[Research Protocol](./docs/research-protocol.en.md)** – Experimental design and validation methodology
+- **[Manifest Schema v1.1](./docs/manifest-schema.md)** – JSON-LD specification (W3C compliant, October 2025)
+- **[Integration Guide](./docs/integration.en.md)** – Add semantic self-description to your services
+- **[Semantic Modeling Patterns](./docs/patterns.en.md)** – Domain-specific examples
+- **[API Reference](./docs/api.en.md)** – Semantic Observer REST API
+- **[Validation Framework](./docs/validation.en.md)** – Metrics and statistical analysis
+- **[Comparison Study](./docs/comparison.en.md)** – vs. OpenTelemetry, Backstage, Istio
+- **[Ethical Compliance Guide](./docs/ethics-compliance.en.md)** – DHAIE ECS integration
+- **[Consent Management](./docs/consent-management.en.md)** – User consent implementation
 
 ---
 
@@ -615,11 +633,11 @@ We welcome academic and industry research partnerships.
 
 ### Current Research Opportunities
 
-1. **Human Factors Study** — Measuring cognitive load reduction in incident response
-2. **Large-Scale Validation** — Deployment across 1000+ services ecosystem
-3. **AI Co-Pilot Integration** — Stanford HAI collaboration framework
-4. **Ethical Compliance** — Automated regulatory checking for financial services
-5. **Consent Mechanisms** — Novel approaches to distributed consent management
+1. **Human Factors Study** – Measuring cognitive load reduction in incident response
+2. **Large-Scale Validation** – Deployment across 1000+ services ecosystem
+3. **AI Co-Pilot Integration** – Stanford HAI collaboration framework
+4. **Ethical Compliance** – Automated regulatory checking for financial services
+5. **Consent Mechanisms** – Novel approaches to distributed consent management
 
 ### How to Collaborate
 
@@ -659,11 +677,11 @@ We welcome contributions that advance semantic reflexivity in software systems.
 
 ### Contribution Guidelines
 
-- Maintain **semantic clarity** — code should explain its purpose
-- Follow **manifest schema** — all services must be self-describing
-- Document **business meaning** — not just technical implementation
-- Respect **DHAIE principles** — see [CONTRIBUTING.md](CONTRIBUTING.md)
-- Include **ethical impact assessment** — for significant changes
+- Maintain **semantic clarity** – code should explain its purpose
+- Follow **manifest schema** – all services must be self-describing
+- Document **business meaning** – not just technical implementation
+- Respect **DHAIE principles** – see [CONTRIBUTING.md](CONTRIBUTING.md)
+- Include **ethical impact assessment** – for significant changes
 
 **For Researchers:** Include validation methodology and metrics in your PRs.  
 **For Ethics:** Include DHAIE ECS impact analysis for new features.
@@ -699,16 +717,16 @@ The project uses a **hybrid licensing model** optimized for research adoption an
 ```python
 # SPDX-License-Identifier: Apache-2.0
 # Copyright © Viktor Savitskiy, 2025
-# DHAIE Project — Reflexive AI Infrastructure
+# DHAIE Project – Reflexive AI Infrastructure
 ```
 
 ### 📚 For Documentation and Content
 - **License:** [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 - **Applies to:** documentation, research papers, images, philosophical materials, diagrams
 - **Terms:**
-  - **Attribution** — credit must be given to: **Viktor Savitskiy / DHAIE Project**
-  - **NonCommercial** — non-commercial use only (academic research is allowed)
-  - **ShareAlike** — derivative works must use the same license
+  - **Attribution** – credit must be given to: **Viktor Savitskiy / DHAIE Project**
+  - **NonCommercial** – non-commercial use only (academic research is allowed)
+  - **ShareAlike** – derivative works must use the same license
 
 **Example header for documentation:**
 ```markdown
@@ -742,24 +760,24 @@ For **enterprise deployments**, **proprietary integrations**, or **commercial pr
 ### Why Apache 2.0 for Code?
 
 We chose **Apache 2.0** to maximize adoption while protecting innovation:
-- **Enterprise-friendly** — integrates with proprietary systems
-- **Patent protection** — explicit grant prevents litigation
-- **Clear attribution** — contributions are recognized
-- **Ecosystem compatible** — Spring Boot, Neo4j, OpenTelemetry all use Apache 2.0
+- **Enterprise-friendly** – integrates with proprietary systems
+- **Patent protection** – explicit grant prevents litigation
+- **Clear attribution** – contributions are recognized
+- **Ecosystem compatible** – Spring Boot, Neo4j, OpenTelemetry all use Apache 2.0
 
 **Complete information:** [LICENSE.md](LICENSE.md)
 
 ### 📄 Attributions and Dependencies
-- **[NOTICE](NOTICE)** — Project information and copyrights
-- **[DEPENDENCIES.md](DEPENDENCIES.md)** — Complete list of third-party components  
-- **[ETHICS.md](ETHICS.md)** — Ethical framework and compliance
+- **[NOTICE](NOTICE)** – Project information and copyrights
+- **[DEPENDENCIES.md](DEPENDENCIES.md)** – Complete list of third-party components  
+- **[ETHICS.md](ETHICS.md)** – Ethical framework and compliance
 
 **Complete licensing information:** [LICENSE](LICENSE) | [NOTICE](NOTICE)
 
 ---
 
 **Copyright © Viktor Savitskiy (Савицкий Виктор Николаевич), 1995–2025**  
-**DHAIE Project — Design Human AI Engineering & Enhancement**  
+**DHAIE Project – Design Human AI Engineering & Enhancement**  
 All rights reserved under applicable international law.
 
 ---
@@ -772,7 +790,7 @@ This project evolves thanks to critical feedback from:
 - **DARPA XAI Program** reviewers
 - **Stanford HAI** Human-AI Collaboration Lab
 - **MIT CSAIL** Software Architecture Group
-- **DHAIE Ethics Committee** — quarterly compliance reviews
+- **DHAIE Ethics Committee** – quarterly compliance reviews
 
 *See [ACKNOWLEDGMENTS.md](ACKNOWLEDGMENTS.md) for complete list of partners and contributors*
 
@@ -806,11 +824,11 @@ This project evolves thanks to critical feedback from:
 
 ## 🔗 Related Projects
 
-- **[DHAIE — Design Human AI](https://github.com/designhumanai/design-human-ai)** — Philosophical and cognitive foundation (1995–2025)
-- **[Neurostiv Framework](https://github.com/designhumanai/neurostiv-framework)** — Adaptive human-AI coordination protocol
-- **[W3C Semantic Web](https://www.w3.org/standards/semanticweb/)** — Standards we build upon (JSON-LD, RDF, OWL)
-- **[DARPA XAI](https://www.darpa.mil/program/explainable-artificial-intelligence)** — Research program inspiring our approach
-- **[DHAIE Ethics Framework](https://github.com/designhumanai/ethics-framework)** — Ethical compliance system
+- **[DHAIE – Design Human AI](https://github.com/designhumanai/design-human-ai)** – Philosophical and cognitive foundation (1995–2025)
+- **[Neurostiv Framework](https://github.com/designhumanai/neurostiv-framework)** – Adaptive human-AI coordination protocol
+- **[W3C Semantic Web](https://www.w3.org/standards/semanticweb/)** – Standards we build upon (JSON-LD, RDF, OWL)
+- **[DARPA XAI](https://www.darpa.mil/program/explainable-artificial-intelligence)** – Research program inspiring our approach
+- **[DHAIE Ethics Framework](https://github.com/designhumanai/ethics-framework)** – Ethical compliance system
 
 ---
 
@@ -818,7 +836,7 @@ This project evolves thanks to critical feedback from:
 
 | Milestone | Status | Target Date | ECS Score |
 |-----------|--------|-------------|-----------|
-| Phase 0: Schema Design | ✅ Complete | October 2025 | 92% |
+| Phase 0: Schema Design v1.1 | ✅ Complete | October 2025 | 92% |
 | Phase 1: Observer MVP | 🔄 Active | December 2025 | 92% |
 | Phase 2: Drift Detection | 📋 Planned | February 2026 | Target: 95% |
 | Research Publication | 📝 Under Review | ICSE 2026 | - |
@@ -826,7 +844,8 @@ This project evolves thanks to critical feedback from:
 
 ---
 
-**Last updated:** October 16, 2025  
+**Last updated:** October 18, 2025  
+**Schema Version:** v1.1 (with `$comment` support and educational annotations)  
 **Research Phase:** Active Development (Phase 1)  
 **DHAIE ECS Score:** 92% (🥇 GOLD)  
 **Seeking:** Validation Partners, Research Collaborators, Early Adopters  
