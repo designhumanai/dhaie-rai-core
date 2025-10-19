@@ -1,0 +1,74 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright © Viktor Savitskiy, 2025
+
+# DHAIE RAI Core - Development Docker Compose
+# For local development and testing of Semantic Observer
+
+version: '3.8'
+
+services:
+  # Neo4j Graph Database
+  neo4j:
+    image: neo4j:5.13-community
+    container_name: dhaie-neo4j
+    ports:
+      - "7474:7474"  # Browser UI
+      - "7687:7687"  # Bolt protocol
+    environment:
+      - NEO4J_AUTH=neo4j/dhaie-rai-dev
+      - NEO4J_PLUGINS=["apoc"]
+      - NEO4J_dbms_memory_pagecache_size=512M
+      - NEO4J_dbms_memory_heap_max__size=1G
+      - NEO4J_dbms_security_procedures_unrestricted=apoc.*
+      - NEO4J_dbms_security_procedures_allowlist=apoc.*
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+    healthcheck:
+      test: ["CMD", "cypher-shell", "-u", "neo4j", "-p", "dhaie-rai-dev", "RETURN 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - dhaie-network
+
+  # Semantic Observer Service
+  semantic-observer:
+    build:
+      context: ./semantic-observer
+      dockerfile: Dockerfile
+    container_name: dhaie-semantic-observer
+    ports:
+      - "8080:8080"
+    environment:
+      - NEO4J_URI=bolt://neo4j:7687
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=dhaie-rai-dev
+      - LOG_LEVEL=INFO
+    depends_on:
+      neo4j:
+        condition: service_healthy
+    volumes:
+      - ./schema:/app/schema:ro
+      - ./examples:/app/examples:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    networks:
+      - dhaie-network
+    restart: unless-stopped
+
+volumes:
+  neo4j_data:
+    driver: local
+  neo4j_logs:
+    driver: local
+
+networks:
+  dhaie-network:
+    driver: bridge
+    name: dhaie-rai-network
