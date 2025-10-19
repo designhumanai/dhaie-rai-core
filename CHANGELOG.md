@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Documentation
+- **Timeline Update**: Shifted Phase 1 research goals from Q1 2025 to Q4 2025-Q1 2026 for chronological accuracy
+- **Research Strategy**: Replaced DARPA AI Exploration application goals with international research collaboration focus
+- **Roadmap Alignment**: Updated 90-day sprint to monthly stages (October 2025 - January 2026)
+- **Version Synchronization**: Fully synchronized Russian and English documentation versions
+- **Publication Path**: Generalized specific conference targets (ICSE 2026, HAI Conference 2026) to peer-reviewed journal focus
+- **Ethics Compliance**: Updated approval references from Stanford University IRB to DHAIE Ethics Committee
+
+### Fixed
+- **Chronology**: Corrected timeline inconsistencies across all documentation
+- **Geopolitical Neutrality**: Removed problematic references to specific government funding programs
+- **Realism**: Ensured all dates and milestones reflect current project status (October 2025 context)
+- **Consistency**: Aligned project status table with updated roadmap and research goals
+
 ## [1.1.0] - 2025-10-18
 
 ### Added
@@ -71,12 +87,3 @@ dhaie-rai-core/
 - **`README.md` & `README.en.md`** - Added manifest validation sections
 - **`docs/validation.md`** - Research and validation procedures
 - **`docs/ethics-checklist.md`** - Ethics and compliance framework
-```
-
-Основные изменения в структуре:
-
-1. **Добавлены все основные файлы** из корневой директории
-2. **Обновлена структура `/docs/`** с указанием ключевых документационных файлов
-3. **Уточнены примеры** в папке `/examples/`
-4. **Убраны артефакты** из списка файлов для скачивания
-5. **Добавлен раздел Documentation Updates** с основными обновлениями документации
