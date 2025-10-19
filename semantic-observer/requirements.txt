@@ -1,0 +1,35 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright © Viktor Savitskiy, 2025
+# DHAIE Project – Reflexive AI Infrastructure
+
+# Core Framework
+fastapi[all]==0.104.1      # Modern async web framework with OpenAPI support
+uvicorn[standard]==0.24.0  # ASGI server with auto-reload for development
+pydantic==2.5.0            # Data validation using Python type annotations
+
+# Neo4j Integration (Step 2)
+neo4j==5.13.0              # Official Neo4j Python driver for graph operations
+
+# Validation (Step 3)
+jsonschema==4.20.0         # JSON Schema validation for manifest compliance
+
+# HTTP Client (for targetUri fetching)
+httpx==0.25.1              # Async HTTP client for fetching remote manifests
+
+# Observability
+python-json-logger==2.0.7  # JSON structured logging
+prometheus-client==0.19.0  # Metrics export for monitoring
+
+# Security
+python-jose[cryptography]==3.3.0  # JWT token validation (future auth)
+
+# Development
+pytest==7.4.3              # Testing framework
+pytest-asyncio==0.21.1     # Async test support
+pytest-cov==4.1.0          # Code coverage reporting
+black==23.11.0             # Code formatting
+flake8==6.1.0              # Linting
+mypy==1.7.1                # Type checking
+
+# Production
+gunicorn==21.2.0           # Production WSGI server
