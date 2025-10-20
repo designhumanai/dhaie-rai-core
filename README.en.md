@@ -9,7 +9,7 @@ Copyright © Viktor Savitskiy, 1995–2025
 
 [![Apache-2.0](https://img.shields.io/badge/Code-Apache--2.0-blue.svg?style=for-the-badge)](LICENSE)
 [![CC BY-NC-SA 4.0](https://img.shields.io/badge/Docs-CC_BY_NC_SA_4.0-lightgrey.svg?style=for-the-badge)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-[![Research Grade](https://img.shields.io/badge/Research-Grade_Prototype-8A2BE2.svg?style=for-the-badge)](#research-context)
+[![Commercial Grade](https://img.shields.io/badge/Status-Commercialization-8A2BE2.svg?style=for-the-badge)](#commercial-offering)
 [![DHAIE ECS: 92%](https://img.shields.io/badge/DHAIE_ECS-92%25-green.svg?style=for-the-badge)](ETHICS.md)
 [![Dependencies](https://img.shields.io/badge/Dependencies-Apache_2.0_Compatible-success.svg?style=for-the-badge)](DEPENDENCIES.md)
 [![Schema v1.1](https://img.shields.io/badge/Schema-v1.1-success.svg?style=for-the-badge)](#schema-v11-release)
@@ -33,6 +33,29 @@ Copyright © Viktor Savitskiy, 1995–2025
 - OpenTelemetry → **How** services communicate
 - Backstage/Service Catalog → **Who** owns what  
 - **DHAIE RAI → Why services exist and what they mean**
+
+---
+
+## 🚀 Commercial Offering
+
+**DHAIE RAI is now available as a commercial platform** with clear component separation:
+
+### 💼 Commercial Products
+
+| Product | Purpose | Status |
+|---------|---------|---------|
+| **`semantic-observer/`** | Semantic Intelligence Platform (Real-time Service Discovery, Semantic Graph Analysis, Ethical Compliance Validation) | 🔄 Active Development |
+| **`reflexive-core/`** | AI Algorithms & Cognitive Architecture (DARPA XAI research, meta-cognition, ethical reasoning engines) | 🔄 Active Development |
+
+### 🌐 Public Ecosystem
+
+| Component | Purpose | License |
+|-----------|---------|---------|
+| **`manifests/`** | Public SDK, specifications, JSON Schema | Apache 2.0 |
+| **`docs/`** | Research documentation | CC BY-NC-SA 4.0 |
+| **`examples/`** | Usage examples (fraud-detector, patient-portal, payment-service) | Apache 2.0 |
+
+**For commercial inquiries:** [contact@designhumanai.com](mailto:contact@designhumanai.com) | [designhumanai.com](https://designhumanai.com)
 
 ---
 
@@ -122,6 +145,8 @@ POST /v1/transfer
 ---
 
 ## 🗃️ Architecture Overview
+
+*Architecture of DHAIE RAI Commercial Platform:*
 
 ```
 ┌────────────────────────────────────────────────────────┐
@@ -562,7 +587,7 @@ https://github.com/designhumanai/dhaie-rai-datasets
 
 ---
 
-## 🧭 Roadmap: Research Sprint (October 2025 - January 2026)
+## 🧭 Roadmap: Commercial Sprint (October 2025 - January 2026)
 
 ### Stage 1: Foundation & Stabilization (October 2025) ✅
 - [x] Design `service-manifest.jsonld` schema (W3C compliant)
@@ -740,7 +765,9 @@ Copyright © Viktor Savitskiy, 1995–2025
 
 ### 💼 Commercial Licensing
 
-For **enterprise deployments**, **proprietary integrations**, or **commercial products**, contact us for licensing options.
+**Commercial components** (`semantic-observer/`, `reflexive-core/`) are available under commercial license.
+
+For **enterprise deployments**, **proprietary integrations**, or **access to commercial products**, contact us.
 
 **Contacts:**
 - 📧 Email: `dhaie@designhumanai.com`
@@ -815,7 +842,8 @@ This project evolves thanks to critical feedback from:
 - 📋 [IEC Review Process](./docs/iec-process.md)
 
 **Commercial Licensing & Enterprise:**
-- 📧 Email: `dhaie@designhumanai.com`
+- 📧 Email: `contact@designhumanai.com`
+- 🌐 Website: [designhumanai.com](https://designhumanai.com)
 
 **Technical Support & Community:**
 - 💬 GitHub Discussions: [Technical and architectural discussions](https://github.com/designhumanai/dhaie-rai-core/discussions)
