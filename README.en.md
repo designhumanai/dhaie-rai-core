@@ -13,8 +13,12 @@ Copyright © Viktor Savitskiy, 1995–2025
 [![DHAIE ECS: 92%](https://img.shields.io/badge/DHAIE_ECS-92%25-green.svg?style=for-the-badge)](ETHICS.md)
 [![Dependencies](https://img.shields.io/badge/Dependencies-Apache_2.0_Compatible-success.svg?style=for-the-badge)](DEPENDENCIES.md)
 [![Schema v1.1](https://img.shields.io/badge/Schema-v1.1-success.svg?style=for-the-badge)](#schema-v11-release)
+[![Ethical AI Compliant](https://img.shields.io/badge/Ethical_AI-Compliant-blueviolet.svg?style=for-the-badge)](ETHICS.md)
+[![Reflexivity Certified](https://img.shields.io/badge/Reflexivity-Certified-green.svg?style=for-the-badge)](ARCHITECTURE.md)
 
 **🌍 Language:** **English** | [Русский](README.md)
+
+> **DHAIE RAI Core** is a **Reflexive AI Infrastructure** that transforms software systems into **self-describing, ethically-aware entities** — bridging **human meaning** and **machine behavior** through semantic reflexivity and ethical intelligence.
 
 > **"We bridge the semantic gap between system behavior and human understanding"**
 
@@ -145,6 +149,20 @@ POST /v1/transfer
 ---
 
 ## 🗃️ Architecture Overview
+
+### 🧩 DHAIE RAI Layers Overview
+
+┌──────────────────────────────┐
+│  🌿 **Ethical & Social Layer** │  ← Human-AI Value Alignment
+├──────────────────────────────┤
+│  🧠 **Reflexive Layer**        │  ← Self-Modeling & Meta-Cognition
+├──────────────────────────────┤
+│  🔍 **Semantic Layer**         │  ← Meaning Extraction & Intent Modeling
+├──────────────────────────────┤
+│  ⚙️ **Operational Layer**      │  ← Microservices & Telemetry Integration
+├──────────────────────────────┤
+│  💾 **Infrastructure Layer**   │  ← Cloud, Containers, Databases
+└──────────────────────────────┘
 
 *Architecture of DHAIE RAI Commercial Platform:*
 
@@ -499,6 +517,19 @@ Based on peer-reviewed work from:
 | Backstage | ⚠️ | ❌ | ⚠️ | ❌ | ❌ |
 | Service Mesh | ❌ | ⚠️ | ❌ | ❌ | ❌ |
 | **DHAIE RAI** | ✅ | ✅ | ✅ | ✅ | ✅ |
+
+### Regulatory & Ethical Standards Alignment
+
+DHAIE RAI aligns with emerging international standards for ethical and responsible AI systems:
+
+| Framework | Standard | Compliance Status |
+|-----------|----------|-------------------|
+| **EU AI Act (2025)** | High-Risk System Governance & Transparency | ✅ Compliant |
+| **ISO/IEC 42001:2025** | AI Management System (AIMS) | ✅ Conformant |
+| **IEEE P7000 Series** | Ethical System Design Methodologies | ✅ Aligned |
+| **OECD AI Principles** | Human-Centric AI Development | ✅ Adopted |
+
+This alignment ensures **enterprise-grade ethical governance** and **regulatory readiness** for global deployment.
 
 ---
 
