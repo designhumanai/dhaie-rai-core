@@ -13,8 +13,7 @@ Copyright © Viktor Savitskiy, 1995–2025
 [![DHAIE ECS: 92%](https://img.shields.io/badge/DHAIE_ECS-92%25-green.svg?style=for-the-badge)](ETHICS.md)
 [![Dependencies](https://img.shields.io/badge/Dependencies-Apache_2.0_Compatible-success.svg?style=for-the-badge)](DEPENDENCIES.md)
 [![Schema v1.1](https://img.shields.io/badge/Schema-v1.1-success.svg?style=for-the-badge)](#schema-v11-release)
-[![Ethical AI Compliant](https://img.shields.io/badge/Ethical_AI-Compliant-blueviolet.svg?style=for-the-badge)](ETHICS.md)
-[![Reflexivity Certified](https://img.shields.io/badge/Reflexivity-Certified-green.svg?style=for-the-badge)](ARCHITECTURE.md)
+[![Reflexivity Certified](https://img.shields.io/badge/Reflexivity-Certified-green.svg?style=for-the-badge)](docs/architecture-overview.md)
 
 **🌍 Language:** **English** | [Русский](README.md)
 
@@ -152,17 +151,19 @@ POST /v1/transfer
 
 ### 🧩 DHAIE RAI Layers Overview
 
+```
 ┌──────────────────────────────┐
-│  🌿 **Ethical & Social Layer** │  ← Human-AI Value Alignment
+│ 🌿 Ethical & Social Layer │ ← Human-AI Value Alignment
 ├──────────────────────────────┤
-│  🧠 **Reflexive Layer**        │  ← Self-Modeling & Meta-Cognition
+│ 🧠 Reflexive Layer │ ← Self-Modeling & Meta-Cognition
 ├──────────────────────────────┤
-│  🔍 **Semantic Layer**         │  ← Meaning Extraction & Intent Modeling
+│ 🔍 Semantic Layer │ ← Meaning Extraction & Intent Modeling
 ├──────────────────────────────┤
-│  ⚙️ **Operational Layer**      │  ← Microservices & Telemetry Integration
+│ ⚙️ Operational Layer │ ← Microservices & Telemetry Integration
 ├──────────────────────────────┤
-│  💾 **Infrastructure Layer**   │  ← Cloud, Containers, Databases
+│ 💾 Infrastructure Layer │ ← Cloud, Containers, Databases
 └──────────────────────────────┘
+```
 
 *Architecture of DHAIE RAI Commercial Platform:*
 
@@ -673,15 +674,15 @@ https://github.com/designhumanai/dhaie-rai-datasets
 
 ## 📚 Documentation
 
-- **[Research Protocol](./docs/research-protocol.en.md)** – Experimental design and validation methodology
+- **[Research Protocol](./docs/research-protocol.md)** – Experimental design and validation methodology
 - **[Manifest Schema v1.1](./docs/manifest-schema.md)** – JSON-LD specification (W3C compliant, October 2025)
-- **[Integration Guide](./docs/integration.en.md)** – Add semantic self-description to your services
-- **[Semantic Modeling Patterns](./docs/patterns.en.md)** – Domain-specific examples
+- **[Integration Guide](./docs/integration.md)** – Add semantic self-description to your services
+- **[Semantic Modeling Patterns](./docs/patterns.md)** – Domain-specific examples
 - **[API Reference](./docs/api.en.md)** – Semantic Observer REST API
-- **[Validation Framework](./docs/validation.en.md)** – Metrics and statistical analysis
-- **[Comparison Study](./docs/comparison.en.md)** – vs. OpenTelemetry, Backstage, Istio
+- **[Validation Framework](./docs/validation.md)** – Metrics and statistical analysis
+- **[Comparison Study](./docs/comparison.md)** – vs. OpenTelemetry, Backstage, Istio
 - **[Ethical Compliance Guide](./docs/ethics-compliance.en.md)** – DHAIE ECS integration
-- **[Consent Management](./docs/consent-management.en.md)** – User consent implementation
+- **[Consent Management](./docs/consent-management.md)** – User consent implementation
 
 ---
 
@@ -750,7 +751,11 @@ We welcome contributions that advance semantic reflexivity in software systems.
 
 [![Apache-2.0](https://img.shields.io/badge/Code-Apache--2.0-blue.svg?style=for-the-badge)](LICENSE)
 [![CC BY-NC-SA 4.0](https://img.shields.io/badge/Docs-CC_BY_NC_SA_4.0-lightgrey.svg?style=for-the-badge)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-[![DHAIE ECS: 92%](https://img.shields.io/badge/DHAIE_ECS-92%25-green.svg?style=for-the-badge)](ETHICS.md)
+[![Commercial Grade](https://img.shields.io/badge/Status-Commercialization-8A2BE2.svg?style=for-the-badge)](#commercial-offering)
+[![Dependencies](https://img.shields.io/badge/Dependencies-Apache_2.0_Compatible-success.svg?style=for-the-badge)](DEPENDENCIES.md)
+[![Schema v1.1](https://img.shields.io/badge/Schema-v1.1-success.svg?style=for-the-badge)](#schema-v11-release)
+[![Ethical AI Compliant](https://img.shields.io/badge/Ethical_AI-Compliant-blueviolet.svg?style=for-the-badge)](ETHICS.md)
+[![Reflexivity Certified](https://img.shields.io/badge/Reflexivity-Certified-green.svg?style=for-the-badge)](docs/architecture-overview.md)
 
 ### 📄 For This File (README.md)
 - **License:** [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-nc-sa/4.0/)
@@ -905,7 +910,7 @@ This project evolves thanks to critical feedback from:
 
 ---
 
-**Last updated:** October 19, 2025  
+**Last updated:** October 2025  
 **Schema Version:** v1.1 (with `$comment` support and educational annotations)  
 **Research Phase:** Active Development (Phase 1)  
 **DHAIE ECS Score:** 92% (🥇 GOLD)  
